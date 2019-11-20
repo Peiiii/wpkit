@@ -1,53 +1,25 @@
 
 import pkg_resources
-from . import piu
 import os, glob, uuid
-from . import pkg_info
-
-def join_path(*args):
-    path = []
-    for i, s in enumerate(args):
-        if s.strip() == '':
-            continue
-        if i == 0:
-            path.append(s.rstrip('/'))
-        elif i == len(args) - 1:
-            path.append(s.lstrip('/'))
-        else:
-            path.append(s.strip('/'))
-    path = '/'.join(path).replace('//', '/')
-    return path
+from .resources import default_templates,get_default_template_string,default_static_dir
+from .utils import piu,render,pkg_info,join_path
+from . import bluepoints as bps
+from . import utils
 try:
     from jinja2 import Environment
     from flask import Flask, request, Blueprint, abort, send_file
 except:
     pass
-
-def render(s, *args, **kwargs):
-    env = Environment()
-    tem = env.from_string(s)
-    return tem.render(*args, **kwargs)
-
-default_templates = {
-    'welcome': pkg_resources.resource_filename('wpkit', 'data/templates/welcome.html'),
-    'files': pkg_resources.resource_filename('wpkit', 'data/templates/files.html'),
-    'board': pkg_resources.resource_filename('wpkit', 'data/templates/board.html'),
-    'sitemap': pkg_resources.resource_filename('wpkit', 'data/templates/sitemap.html')
-}
-default_static_dir=os.path.join(pkg_info.pkg_dir,'data','static')
-
-
-def get_default_template_string(tem):
-    return open(default_templates[tem], 'r', encoding='utf-8').read()
-
 class App(Flask):
-
-    def __init__(self, import_name ,dbpath='./data/db'):
+    def __init__(self, import_name ,dbpath='./data/db',add_pkg_resources=True):
         super().__init__(import_name)
         self.default_templates = default_templates
         self.db=piu.Piu(dbpath)
+        self.o=utils.IterObject()
+        self.o.sitemap={}
+        if add_pkg_resources:
+            self.add_static(url_prefix='/pkg-resource', static_dir=default_static_dir)
     def add_default_route(self):
-        self.add_static(url_prefix='/pkg-resource',static_dir=default_static_dir)
         self.register_blueprint(self.bp_root())
         self.register_blueprint(self.bp_board())
         self.add_multi_static({'/fs':'./'})
@@ -107,34 +79,22 @@ class App(Flask):
                 return render(open(template, 'r', encoding='utf-8').read(), files=zip(fps, fns))
 
         return bp
-def start_simple_http_server(import_name,host='127.0.0.1',port=80,static={'/fs':'./'}):
+
+
+def get_default_app(import_name,static_dir_dic=None):
     app = App(import_name=import_name)
-    app.add_static(url_prefix='/pkg-resource',static_dir=default_static_dir)
-    app.register_blueprint(app.bp_root(name='root', url_prefix='/'))
-    app.register_blueprint(app.bp_board(name='board1', url_prefix='/board'))
-    app.add_multi_static(static)
-    app.register_blueprint(app.bp_sitemap(name='sitemap', url_prefix='/sitemap', map={
-        'root': '/',
-        'board': '/board',
-        'files': '/fs',
-        'sitemap': '/sitemap'
-    }))
+    app.register_blueprint(bps.bp_welcome(app, url_prefix='/'))
+    app.register_blueprint(bps.bp_static(app, url_prefix='/files', static_dir='./', name='files'))
+    app.add_multi_static(static_dir_dic) if static_dir_dic else None
+    app.register_blueprint(bps.bp_board(app, url_prefix='/board'))
+    if pkg_info.is_linux():
+        app.register_blueprint(bps.bp_post_and_download_by_linux_wget(app, url_prefix='/post_and_download'))
+    app.register_blueprint(bps.bp_sitemap(app, url_prefix='/sitemap'))
+    return app
+def start_simple_http_server(import_name,host='127.0.0.1',port=80,static_dir_dic=None):
+    app=get_default_app(import_name=import_name,static_dir_dic=static_dir_dic)
     print(app.url_map)
     app.run(host=host,port=port)
-
-def get_default_app(import_name,static={'/fs':'./'}):
-    app = App(import_name=import_name)
-    app.add_static(url_prefix='/pkg-resource', static_dir=default_static_dir)
-    app.register_blueprint(app.bp_root(name='root', url_prefix='/'))
-    app.register_blueprint(app.bp_board(name='board1', url_prefix='/board'))
-    app.add_multi_static(static)
-    app.register_blueprint(app.bp_sitemap(name='sitemap', url_prefix='/sitemap', map={
-        'root': '/',
-        'board': '/board',
-        'files': '/fs',
-        'sitemap': '/sitemap'
-    }))
-    return app
 
 if __name__ == '__main__':
     start_simple_http_server(__name__)

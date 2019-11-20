@@ -13,9 +13,13 @@
 <body>
 <!--    主体-->
 <table class="table table-bordered table-striped">
-  {%for i in list%}
-    <tr><td><a href="{{i[1]}}">{{i[0]}}</a></td></tr>
+  <table class="table table-bordered table-striped">
+    <thead>Contents</thead>
+    <tbody>
+        {%for k,v in context.sitemap.items()%}
+    <tr><td><a href="{{v}}">{{k}}</a></td></tr>
     {%endfor%}
+    </tbody>
 </table>
 
 <!--结束-->

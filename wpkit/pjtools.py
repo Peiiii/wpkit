@@ -2,6 +2,28 @@ import time, os, glob, shutil, random
 import functools
 
 
+class PointDict(dict):
+    __no_value__='<__no_value__>'
+    def __getattr__(self, key):
+        return self.get(key)
+    def __setattr__(self, key, value):
+        self[key]=value
+    def __call__(self, key , value=__no_value__):
+        if value is self.__no_value__:
+            self[key]=PointDict()
+        else:
+            self[key]=value
+        return self[key]
+    @classmethod
+    def from_dict(cls,dic):
+        dic2=cls()
+        for k,v in dic.items():
+            if not isinstance(v,dict):
+                dic2[k]=v
+            else:
+                dic2[k]=cls.from_dict(v)
+        return dic2
+
 class Config(dict):
     def __setattr__(self, key, value):
         self[key] = value

@@ -4,8 +4,8 @@ linux: wget lsof
 '''
 
 import os,subprocess,time,shutil
-link= 'https://dn3.freedownloadmanager.org/5/5.1-latest/fdm5_x64_setup.exe'
-git_link='https://github.com/myhub/tr'
+test_link= 'https://dn3.freedownloadmanager.org/5/5.1-latest/fdm5_x64_setup.exe'
+test_git_link='https://github.com/myhub/tr'
 def shell_cmd(cmd):
     p=subprocess.Popen(cmd,shell=True)
     p.wait()

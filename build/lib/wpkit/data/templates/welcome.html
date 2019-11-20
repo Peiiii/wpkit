@@ -15,9 +15,9 @@
     <table class="table table-bordered table-striped">
     <thead>Contents</thead>
     <tbody>
-        <tr><td><a href="/fs">Files</a></td></tr>
-        <tr><td><a href="/board">Board</a></td></tr>
-        <tr><td><a href="/sitemap">Sitemap</a></td></tr>
+        {%for k,v in context.sitemap.items()%}
+    <tr><td><a href="{{v}}">{{k}}</a></td></tr>
+    {%endfor%}
     </tbody>
 </table>
 

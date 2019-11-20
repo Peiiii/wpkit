@@ -1,7 +1,7 @@
 import wpkit
 # a=wpkit.data.get_data('demos/app.py')
 # print(a)
-app=wpkit.web.App(__name__)
+app= wpkit.web.web.App(__name__)
 # app.add_default_route()
 app.register_blueprint(app.bp_root(name='root',url_prefix='/'))
 app.register_blueprint(app.bp_board(name='board1',url_prefix='/board'))
