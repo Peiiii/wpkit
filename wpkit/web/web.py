@@ -1,11 +1,10 @@
-
-import pkg_resources
-import os, glob, uuid
-from .resources import default_templates,get_default_template_string,default_static_dir
-from .utils import piu,render,pkg_info,join_path
-from . import bluepoints as bps
-from . import utils
 try:
+    import pkg_resources
+    import os, glob, uuid
+    from .resources import default_templates, get_default_template_string, default_static_dir
+    from .utils import piu, render, pkg_info, join_path
+    # from . import bluepoints as bps
+    from . import utils
     from jinja2 import Environment
     from flask import Flask, request, Blueprint, abort, send_file
 except:

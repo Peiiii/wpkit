@@ -1,2 +1,2 @@
 from .web import *
-from . import bluepoints,examples
+# from . import bluepoints,examples

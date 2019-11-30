@@ -39,3 +39,5 @@ wpkit/web/examples.py
 wpkit/web/resources.py
 wpkit/web/utils.py
 wpkit/web/web.py
+wpkit/web/bps/__init__.py
+wpkit/web/bps/bp_post_and_download_by_linux_wget.py
