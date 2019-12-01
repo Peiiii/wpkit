@@ -98,7 +98,8 @@ class DirPath(str):
         if s is self.__no_value__:
             return self.__read__()
         else:
-            return self.__write__(s)
+            self.__write__(s)
+            return self
     def info(self):
         assert self.exists()
         info=PointDict()
@@ -142,6 +143,11 @@ class DirPath(str):
     def getsize(self):
         assert self.isfile()
         return os.path.getsize(self)
+    def add(self,s):
+        assert self.isfile()
+        with open(self,'a',encoding='utf-8') as f:
+            f.write(s)
+        return self
     def file(self,fn):
         fp=self/fn
         if not os.path.exists(fp):

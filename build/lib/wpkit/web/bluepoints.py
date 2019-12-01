@@ -40,7 +40,7 @@ def bp_welcome(app,url_prefix='/',name='home'):
     @bp.route('/')
     def do_root():
         temf = resources.default_templates['welcome']
-        print(app.o)
+        # print(app.o)
         return render(open(temf, 'r', encoding='utf-8').read(),context=app.o)
     return bp
 def bp_board(app, name='board',url_prefix='/board',db_path=None):

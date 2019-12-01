@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wpkit", # Replace with your own username
-    version="0.1.7",
+    version="0.1.9.2",
     author="WangPei",
     author_email="1535376447@qq.com",
     description="A small example package",
@@ -15,6 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     package_dir={'wpkit':'wpkit'},
     package_data={'wpkit':[
+        'data/*',
         'data/templates/*','data/demos/*','data/static/*','data/static/js/*','data/static/css/*',
         'data/static/html/*'
     ]},

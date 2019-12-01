@@ -1,11 +1,10 @@
-
-import pkg_resources
-import os, glob, uuid
-from .resources import default_templates,get_default_template_string,default_static_dir
-from .utils import piu,render,pkg_info,join_path
-from . import bluepoints as bps
-from . import utils
 try:
+    import pkg_resources
+    import os, glob, uuid
+    from .resources import default_templates, get_default_template_string, default_static_dir
+    from .utils import piu, render, pkg_info, join_path
+    from . import bluepoints as bps_tmp
+    from . import utils
     from jinja2 import Environment
     from flask import Flask, request, Blueprint, abort, send_file
 except:
@@ -83,13 +82,13 @@ class App(Flask):
 
 def get_default_app(import_name,static_dir_dic=None):
     app = App(import_name=import_name)
-    app.register_blueprint(bps.bp_welcome(app, url_prefix='/'))
-    app.register_blueprint(bps.bp_static(app, url_prefix='/files', static_dir='./', name='files'))
+    app.register_blueprint(bps_tmp.bp_welcome(app, url_prefix='/'))
+    app.register_blueprint(bps_tmp.bp_static(app, url_prefix='/files', static_dir='./', name='files'))
     app.add_multi_static(static_dir_dic) if static_dir_dic else None
-    app.register_blueprint(bps.bp_board(app, url_prefix='/board'))
+    app.register_blueprint(bps_tmp.bp_board(app, url_prefix='/board'))
     if pkg_info.is_linux():
-        app.register_blueprint(bps.bp_post_and_download_by_linux_wget(app, url_prefix='/post_and_download'))
-    app.register_blueprint(bps.bp_sitemap(app, url_prefix='/sitemap'))
+        app.register_blueprint(bps_tmp.bp_post_and_download_by_linux_wget(app, url_prefix='/post_and_download'))
+    app.register_blueprint(bps_tmp.bp_sitemap(app, url_prefix='/sitemap'))
     return app
 def start_simple_http_server(import_name,host='127.0.0.1',port=80,static_dir_dic=None):
     app=get_default_app(import_name=import_name,static_dir_dic=static_dir_dic)

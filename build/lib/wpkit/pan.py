@@ -1,6 +1,6 @@
 import git as g
 import os
-from wpkit.basic import PowerDirPath,PointDict
+from wpkit.basic import PowerDirPath
 class Pan:
     def __init__(self,path):
         assert os.path.exists(path)
@@ -29,32 +29,23 @@ class Pan:
         git.push('origin','master')
     def goback(self,n=1):
         self.git.reset('--hard','HEAD'+'^'*n)
-    def newFile(self,filename,location,content=None):
+    def newFile(self,fn,location,content=None):
         loc=PowerDirPath(location)
-        return loc.file(filename)(content) if content is not None else loc.file(filename)
-    def newDir(self,dirname,location):
+        return loc.file(fn)(content) if content is not None else loc.file(fn)
+    def newDir(self,dn,location):
         loc = PowerDirPath(location)
-        return loc(dirname)
+        return loc(dn)
     def delete(self,name,location):
         loc = PowerDirPath(location)
         return (loc/name).rmself()
-    def getFile(self,filename,location):
+    def getFile(self,fn,location):
         loc = PowerDirPath(location)
-        return (loc/filename)()
-    def getDir(self,dirname,location):
+        return (loc/fn)()
+    def getDir(self,dn,location):
         loc = PowerDirPath(location)
-        li=(loc/dirname)()
-        return [{'name':i,'type':PowerDirPath(loc/dirname/i).type()} for i in li]
-    def execute(self,cmd):
-        cmd=PointDict.from_dict(cmd)
-        op,params=cmd.op,cmd.params
-        if op=='newFile':return self.newFile(**params)
-        if op=='newDir':return self.newDir(**params)
-        if op=='getFile':return self.getFile(**params)
-        if op=='getDir':return self.getDir(**params)
-        if op=='delete':return self.delete(**params)
-        if op=='synch':return self.push()
-        if op=='pull':return self.pull()
+        li=(loc/dn)()
+        return [{'name':i,'type':PowerDirPath(loc/dn/i).type()} for i in li]
+
 
 
 

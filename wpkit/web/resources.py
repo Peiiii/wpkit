@@ -1,5 +1,6 @@
 import pkg_resources,os
 from .utils import SecureDirPath,PointDict,pkg_info,Path
+from jinja2 import Environment,PackageLoader
 
 data_path=pkg_info.pkg_data_dir
 default_templates =PointDict.from_dict({
@@ -13,3 +14,5 @@ default_templates =PointDict.from_dict({
 default_static_dir=SecureDirPath(pkg_info.pkg_dir)/'data'/'static'
 def get_default_template_string(tem):
     return open(default_templates[tem], 'r', encoding='utf-8').read()
+
+env=Environment(loader=PackageLoader('wpkit.data','templates'))
