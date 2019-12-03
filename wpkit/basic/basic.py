@@ -98,8 +98,7 @@ class DirPath(str):
         if s is self.__no_value__:
             return self.__read__()
         else:
-            self.__write__(s)
-            return self
+            return self.__write__(s)
     def info(self):
         assert self.exists()
         info=PointDict()
@@ -162,7 +161,7 @@ class DirPath(str):
         if os.path.isfile(self):
             with open(self,'w',encoding='utf-8') as f:
                 f.write(s)
-                return s
+                return self
         else:
             s2 = self / s
             os.mkdir(s2) if not os.path.exists(s2) else None
@@ -186,6 +185,10 @@ class PowerDirPath(DirPath):
             shutil.rmtree(self)
         else:
             os.remove(self)
+    def mkall(self):
+        if not os.path.exists(self):
+            os.makedirs(self)
+        return self
     def __truediv__(self, other):
         return PowerDirPath(DirPath(self).__truediv__(other))
 
