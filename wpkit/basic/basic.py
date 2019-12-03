@@ -132,7 +132,8 @@ class DirPath(str):
     def basename(self):
         return os.path.basename(self)
     def dirname(self):
-        return os.path.dirname(self)
+        name=os.path.dirname(self) if os.path.dirname(self)!='' else '.'
+        return self.__class__(name)
     def getatime(self):
         return os.path.getatime(self)
     def getctime(self):
@@ -185,9 +186,15 @@ class PowerDirPath(DirPath):
             shutil.rmtree(self)
         else:
             os.remove(self)
-    def mkall(self):
+    def todir(self):
         if not os.path.exists(self):
             os.makedirs(self)
+        return self
+    def tofile(self):
+        if not os.path.exists(self):
+            self.dirname().todir().file(self.basename())
+        else:
+            assert self.isfile()
         return self
     def __truediv__(self, other):
         return PowerDirPath(DirPath(self).__truediv__(other))

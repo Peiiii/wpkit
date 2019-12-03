@@ -11,8 +11,11 @@ class Piu:
     def setup(self):
         if self._exists():return json_load(self.dicpath)
         return self._make()
-    def add(self,key,value):
-        self.dic[key]=value
+    def add(self,key=None,value=None,**kwargs):
+        assert (key is None )or isinstance(key,str)
+        if key:
+            self.dic[key]=value
+        self.dic.update(**kwargs)
         self._save()
     def delete(self,key):
         del self.dic[key]
