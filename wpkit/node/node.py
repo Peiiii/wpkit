@@ -86,6 +86,10 @@ def struc(x,**kwargs):
     if 'struc' in dir(x):
         return x.struc(**kwargs)
     return str(x)
+def tostr(x,**kwargs):
+    if 'to_string' in dir(x):
+        return x.to_string(**kwargs)
+    return str(x)
 class NodeAttr(object):
     def __init__(self,*args,**kwargs):
         assert len(args) or len(kwargs)
@@ -101,7 +105,7 @@ class NodeAttr(object):
             return str(self.value)
         if self.type==T.KWARG:
             name='class' if self.name=='_class' else self.name
-            return '%s="%s"'%(name,self.value)
+            return '%s="%s"'%(name,tostr(self.value,new_line=False))
     def struc(self,*args,**kwargs):
         if self.type==T.ARG:
             return struc(self.value,depth=0)
@@ -133,7 +137,7 @@ class Node(metaclass=NodeMetaClass):
                 self.__dict__['__attrs__'].append(x)
                 kwattrs[k]=x
     def attr(self,key=None,**kwargs):
-        if key:return self.__dict__['__attrs__'].get(key,None)
+        if key:return self.getd('kwattrs').get(key,None)
         if len(kwargs):
             self.update_attr(**kwargs)
             return self
@@ -186,8 +190,9 @@ class Node(metaclass=NodeMetaClass):
                 if att.type==T.ARG:att.value=v2
                 else:self.update_attr(**{att.name:v2})
             return self
-        for v1 in self.children():
-            return self.replace(v1,v2)
+        if v1 in self.children():
+            self.replace(v1,v2)
+            return self
         return self
     def replacewith(self,node):
         if isinstance(node,str):node=Text(node)
@@ -235,6 +240,12 @@ class Node(metaclass=NodeMetaClass):
 
     def getd(self, key, *args, **kwargs):
         return self.get_attribute('__%s__' % (key), *args, **kwargs)
+    def render(self,**kwargs):
+        for k,v in kwargs.items():
+            ns = self.find_var('var[varname=%s]'%(k))
+            for n in ns:
+                n.replacewith(v)
+        return self
     def match(self,**kwargs):
         if '__node_type__' in kwargs.keys():
             if not self.getd('node_type')==kwargs['__node_type__']:return False
@@ -246,6 +257,7 @@ class Node(metaclass=NodeMetaClass):
             if not self.__getattr__(k)==v:return False
         return True
     def find_var(self, sel=None,kws=None, res_list=None):
+        # print(kws)
         if sel:kws=parse_selector(sel);
         if not res_list:res_list={'list':FindResult()}
         for att in self.attr():
@@ -268,12 +280,6 @@ class Node(metaclass=NodeMetaClass):
 
     def compile(self):
         return Text(self.to_string())
-    def render(self,**kwargs):
-        for k,v in kwargs.items():
-            ns = self.find_var('var[varname=%s]'%(k))
-            for n in ns:
-                n.replacewith(v)
-        return self
     def tofile(self,fp):
         from wpkit.basic import PowerDirPath
         PowerDirPath(fp).tofile()(self.to_string())
@@ -301,7 +307,7 @@ class Node(metaclass=NodeMetaClass):
                                                content,mid,self.__node_type__)
         else:
             return '\n%s<%s %s/>' % (self.__indent__ * depth,self.__node_type__,attrs)
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         def to_string(ch,depth=0):
            return ch.to_string(depth=depth) if isinstance(ch,Node) else '\n'+self.__indent__*depth+str(ch)
         attrs = ' '.join([str(att) for att in self.attr()])
@@ -315,7 +321,7 @@ class Node(metaclass=NodeMetaClass):
             return '\n%s<%s %s/>' % (self.__indent__ * depth,self.__node_type__,attrs)
     def print_structure(self):
         print(self.struc())
-    def struc(self,depth=0,new_line=True):
+    def struc(self,depth=0,new_line=True,*args,**kwargs):
         def to_string(ch,depth=0):
            return ch.struc(depth=depth,new_line=new_line) if isinstance(ch,Node) else '\n'*new_line+self.__indent__*depth+str(ch)
         attrs=' '.join([struc(att,depth=0) for att in self.attr()])
@@ -341,8 +347,8 @@ class Text(Node):
         super().__init__(**kwargs)
     def struc(self,depth=0,new_line=True):
         return '\n'*new_line+depth*self.__indent__+'<%s>%s</%s>'%(self.getd('node_type'),self.getd('content'),self.getd('node_type'))
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+str(self.getd('content'))
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
+        return '\n'*new_line+self.__indent__*depth+str(self.getd('content'))
     def render(self,**kwargs):
         from jinja2 import Environment
         tem = Environment().from_string(self.getd('content'))
@@ -353,19 +359,19 @@ class Comment(Node):
     def __init__(self, content='', **kwargs):
         self.__dict__['content'] = content
         super().__init__(**kwargs)
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+'<!--'+str(self.__dict__['content'])+'-->'
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
+        return '\n'*new_line+self.__indent__*depth+'<!--'+str(self.__dict__['content'])+'-->'
 
 class NodeList(Node,deque):
     def __init__(self,*args):
         deque.__init__(self,*args)
         Node.__init__(self)
-    def struc(self,depth=0,new_line=True):
+    def struc(self,depth=0,new_line=True,*args,**kwargs):
         mid='\n'*new_line + self.__indent__ * depth
         return mid + '<%s>'%(self.getd('node_type')) + \
         ''.join([struc(item,depth=depth+1,new_line=new_line)  for item in self]) +\
          mid+'</%s>'%(self.getd('node_type'))
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return ''.join([item.to_string(depth=depth) if isinstance(item,Node) else str(item) for item in self])
 
 # ------------------------vars------------------------
@@ -382,7 +388,7 @@ class Var(Node):
         if not isinstance(node,Node):node=Text(node)
         self.getd('parent').replace_var(self,node)
         return self
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         d=self.vardefault
         if d==T.NOT_GIVEN:return self.get_string(depth=depth)
         if not d:return ''
@@ -394,31 +400,31 @@ class Jvar(Node):
         super().__init__(**kwargs)
     def __str__(self):
         return self.to_string()
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return '{{%s}}' % (self.getd('name'))
 class For(Node):
     def __init__(self,forwhat,**kwargs):
         self.setd(forwhat=forwhat)
         super().__init__(**kwargs)
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return '\n'+self.__indent__*depth+'{%for '+self.getd('forwhat')+'%}'+self.get_children_string(depth=depth)+'{%endfor%}'
 
 class If(Node):
     def __init__(self, condition, **kwargs):
         self.setd(condition=condition)
         super().__init__(**kwargs)
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return '\n'+self.__indent__*depth+'{%if '+self.getd('condition')+'%}'+self.get_children_string(depth=depth)+'{%endif%}'
 class Elif(Node):
     def __init__(self, condition, **kwargs):
         self.setd(condition=condition)
         super().__init__(**kwargs)
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return '\n'+self.__indent__*depth+'{%elif '+self.getd('condition')+'%}'+self.get_children_string(depth=depth)
 class Else(Node):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    def to_string(self, depth=0):
+    def to_string(self, depth=0,new_line=True,*args,**kwargs):
         return '\n'+self.__indent__*depth+'{%else%}'+self.get_children_string(depth=depth)
 
 
@@ -441,6 +447,7 @@ class Img(CloseNode):pass
 class Form(Node):pass
 class Input(CloseNode):pass
 class Button(Node):pass
+# --------------some utils---------------------
 
 # ---------more tags ---------
 
@@ -547,9 +554,16 @@ taglist=\
     'comment element shadow slot template ' \
     'big blink center bgsound center command '.split()
 
+class css:
+    class color:
+        white='#ffffff'
+        black='#00000'
+# -------------------------Utils---------------------------
+class StyleAttr(Node):
 
-# ----------------------------------------------------
-
+    def __init__(self):
+        self.backgound=None
+        self.backgound_color=css.color.white
 
 
 

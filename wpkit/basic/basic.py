@@ -314,7 +314,7 @@ class FileDirDict(PointDict):
             if size%1==0:return '%d %s'%(size,type)
             return '%.2f %s'%(size,type)
         def inrange(s):
-            if size>=1 and size <1000:
+            if size>=0 and size <1000:
                 return True
         if inrange(size):return gen_str(size,'Bytes')
         size/=1024
