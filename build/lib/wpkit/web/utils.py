@@ -6,34 +6,31 @@ from flask import request,render_template,redirect,make_response,jsonify
 import functools,inspect
 from jinja2 import Environment,PackageLoader
 env=Environment(loader=PackageLoader('wpkit.data','templates'))
-
-def auto_args_from_form(f):
-    fargs = inspect.getfullargspec(f).args
-
-    @functools.wraps(f)
-    def wrapper():
-        dic = request.form or {}
-        dic = PointDict.from_dict(dic)
-        params = {}
-        for ag in fargs:
-            params[ag] = dic.get(ag, None)
-        return f(**params)
-
-    return wrapper
-
-def auto_args_from_cookies(f):
-    fargs = inspect.getfullargspec(f).args
-
-    @functools.wraps(f)
-    def wrapper():
-        dic = request.cookies
-        dic = PointDict.from_dict(dic)
-        params = {}
-        for ag in fargs:
-            params[ag] = dic.get(ag, None)
-        return f(**params)
-
-    return wrapper
+import inspect
+def parse_from(*refers):
+    def decorator(f):
+        fargs = inspect.getfullargspec(f).args
+        @functools.wraps(f)
+        def wrapper():
+            dic={}
+            for ref in refers:
+                d = ref() if callable(ref) else dict(ref)
+                if d:dic.update(d)
+            params = {}
+            for ag in fargs:
+                params[ag] = dic.get(ag, None)
+            return f(**params)
+        return wrapper
+    return decorator
+def get_form():return request.form
+def get_json():return request.json
+def get_cookies():return request.cookies
+# parse_json is a decorator
+parse_json_and_form=parse_from(get_json,get_form)
+parse_json=parse_from(get_json)
+parse_form=parse_from(get_form)
+parse_cookies=parse_from(get_cookies)
+parse_all=parse_from(get_cookies,get_form,get_json)
 
 class UserManager:
     __status_succeeded__='succeeded'
@@ -53,7 +50,7 @@ class UserManager:
         return env.get_template('error.html').render(**kwargs)
     def login_required(self,f):
         @functools.wraps(f)
-        @auto_args_from_cookies
+        @parse_cookies
         def wrapper(user_email,user_password):
             if not (user_email and user_password):
                 return self.login_page()
@@ -65,7 +62,7 @@ class UserManager:
                 return self.error_page()
         return wrapper
     def signup(self):
-        @auto_args_from_form
+        @parse_form
         def do_signup(user_email,user_password):
             if self.db.get(user_email,None):return self.signup_page(msg='Email has been taken.')
             self.db.add(key=user_email,value={'user_email':user_email,'user_password':user_password})
@@ -76,7 +73,7 @@ class UserManager:
         return do_signup()
 
     def login(self):
-        @auto_args_from_form
+        @parse_form
         def do_login(user_email,user_password):
             if not self.db.get(user_email,None):return self.status(self.__status_failed__,msg="Email doesn't exists.")
             resp=make_response(self.home_page())

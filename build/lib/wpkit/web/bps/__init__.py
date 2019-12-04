@@ -1,2 +1,8 @@
-from . import bp_fs
-from . import bp_post_and_download_by_linux_wget,bp_pan
+
+from .pan import BluePan
+from .static import BlueStatic
+from .board import BlueBoard
+from .sitemap import BlueSitemap
+from .welcome import BlueWelcomePage
+from .myblueprint import *
+from .post_and_download import BluePostAndDownload

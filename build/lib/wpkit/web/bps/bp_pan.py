@@ -7,6 +7,7 @@ import wpkit
 
 def bp_pan(app, name='pan',url_prefix='/pan',host_dir='./data/pan'):
     bp=Blueprint(name=name,import_name=app.import_name,url_prefix=url_prefix)
+    bp.app=app
     app.o.sitemap[name] = url_prefix
     app.o.pan.usman=utils.UserManager(dbpath='./data/pan/user',home_url=url_prefix)
     usman=app.o.pan.usman

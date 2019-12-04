@@ -98,8 +98,7 @@ class DirPath(str):
         if s is self.__no_value__:
             return self.__read__()
         else:
-            self.__write__(s)
-            return self
+            return self.__write__(s)
     def info(self):
         assert self.exists()
         info=PointDict()
@@ -133,7 +132,8 @@ class DirPath(str):
     def basename(self):
         return os.path.basename(self)
     def dirname(self):
-        return os.path.dirname(self)
+        name=os.path.dirname(self) if os.path.dirname(self)!='' else '.'
+        return self.__class__(name)
     def getatime(self):
         return os.path.getatime(self)
     def getctime(self):
@@ -162,7 +162,7 @@ class DirPath(str):
         if os.path.isfile(self):
             with open(self,'w',encoding='utf-8') as f:
                 f.write(s)
-                return s
+                return self
         else:
             s2 = self / s
             os.mkdir(s2) if not os.path.exists(s2) else None
@@ -186,6 +186,16 @@ class PowerDirPath(DirPath):
             shutil.rmtree(self)
         else:
             os.remove(self)
+    def todir(self):
+        if not os.path.exists(self):
+            os.makedirs(self)
+        return self
+    def tofile(self):
+        if not os.path.exists(self):
+            self.dirname().todir().file(self.basename())
+        else:
+            assert self.isfile()
+        return self
     def __truediv__(self, other):
         return PowerDirPath(DirPath(self).__truediv__(other))
 
@@ -304,7 +314,7 @@ class FileDirDict(PointDict):
             if size%1==0:return '%d %s'%(size,type)
             return '%.2f %s'%(size,type)
         def inrange(s):
-            if size>=1 and size <1000:
+            if size>=0 and size <1000:
                 return True
         if inrange(size):return gen_str(size,'Bytes')
         size/=1024

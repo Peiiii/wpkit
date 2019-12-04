@@ -16,7 +16,7 @@
   <table class="table table-bordered table-striped">
     <thead>Contents</thead>
     <tbody>
-        {%for k,v in context.sitemap.items()%}
+        {%for k,v in sitemap.items()%}
     <tr><td><a href="{{v}}">{{k}}</a></td></tr>
     {%endfor%}
     </tbody>
