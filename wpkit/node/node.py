@@ -1,13 +1,47 @@
-import re
-from collections import deque
+import re,inspect
+# from collections import deque
+import collections
+class deque(collections.deque):
+    def replacewith(self,x1,x2):
+        index=self.index(x1,0,len(self))
+        self.remove(x1)
+        self.insert(index,x2)
+
+class T:
+    NOT_FOUND='NOT_FOUND'
+    NO_VALUE='NO_VALUE'
+    EMPTY='EMPTY'
+    SUCCESS='SUCCESS'
+    FAILURE='FAILURE'
+    NOT_GIVEN='NOT_GIVEN'
+    ARG='ARG'
+    KWARG='KWARG'
+
 
 class NodeMetaClass(type):
     __not_found__='not_found'
     def __new__(cls, name, bases, attrs):
+        dic={}
+        dic['__attrs__'] = deque([])
+        dic['__kwattrs__']={}
+        special_keys=['__open_node__','__node_type__']
         if attrs.get('__open_node__',cls.__not_found__)==cls.__not_found__:
-            attrs['__open_node__']=bases[-1].__open_node__
+            attrs['__open_node__']=bases[0].__dic__['__open_node__']
         if attrs.get('__node_type__',cls.__not_found__)==cls.__not_found__:
             attrs['__node_type__']=name.lower()
+        tmp=attrs.copy()
+        for k,v in tmp.items():
+            if k in special_keys:
+                dic[k]=v
+                attrs.pop(k)
+                continue
+            if inspect.isfunction(v):continue
+            if (not k.startswith('__')) or (not k.endswith('__')):
+                attrs.pop(k)
+                na=NodeAttr(**{k:v})
+                dic['__attrs__'].append(na)
+                dic['__kwattrs__'][k]=na
+        attrs['__dic__']=dic.copy()
         return type.__new__(cls, name, bases, attrs)
 
 def parse_selector(sel):
@@ -48,35 +82,85 @@ def parse_selector(sel):
             res[k.strip()]=v.strip()
             continue
     return res
+def struc(x,**kwargs):
+    if 'struc' in dir(x):
+        return x.struc(**kwargs)
+    return str(x)
+class NodeAttr(object):
+    def __init__(self,*args,**kwargs):
+        assert len(args) or len(kwargs)
+        assert not (len(args) and len(kwargs))
+        if len(args):
+            self.type=T.ARG
+            self.value=args[0]
+        else:
+            self.type=T.KWARG
+            self.name,self.value=list(kwargs.items())[0]
+    def __str__(self):
+        if self.type==T.ARG:
+            return str(self.value)
+        if self.type==T.KWARG:
+            name='class' if self.name=='_class' else self.name
+            return '%s="%s"'%(name,self.value)
+    def struc(self,*args,**kwargs):
+        if self.type==T.ARG:
+            return struc(self.value,depth=0)
+        if self.type==T.KWARG:
+            name='class' if self.name=='_class' else self.name
+            return '%s="%s"'%(name,struc(self.value,depth=0,new_line=False))
+
 class Node(metaclass=NodeMetaClass):
     __indent__=' '*4
     __open_node__=True
-    def __init__(self,**kwargs):
-        self.__dict__['__children__'] = deque([])
-        self.__dict__['__attrs__']=kwargs
-        self.seta(parent=None)
-    def attrs(self):
+    def __init__(self,*args,**kwargs):
+        for k,v in self.__dic__.items():
+            self.__dict__[k]=v.copy() if 'copy' in dir(v) else v
+        self.setd(children=deque([]))
+        self.update_attr(*args,**kwargs)
+        self.setd(parent=None)
+    def update_attr(self,*args,**kwargs):
+        for a in args:
+            self.__dict__['__attrs__'].append(NodeAttr(a))
+        for k,v in kwargs.items():
+            if isinstance(v,Node):v.setd(parent=self)
+            x=NodeAttr(**{k:v})
+            kwattrs=self.getd('kwattrs')
+            if k in kwattrs.keys():
+                x_old=kwattrs[k]
+                self.__dict__['__attrs__'].replacewith(x_old,x)
+                kwattrs[k]=x
+            else:
+                self.__dict__['__attrs__'].append(x)
+                kwattrs[k]=x
+    def attr(self,key=None,**kwargs):
+        if key:return self.__dict__['__attrs__'].get(key,None)
+        if len(kwargs):
+            self.update_attr(**kwargs)
+            return self
         return self.__dict__['__attrs__']
     def parent(self):
-        return self.geta('parent')
-    def children(self):
+        return self.getd('parent')
+    def children(self,*args):
+        if len(args):
+            if len(args)==1 and isinstance(args[0],int):return self.getd('children')[args[0]]
+            self.setd(children=list(args))
         return self.__dict__['__children__']
     def append(self,x):
-        x.seta(parent=self)
+        x.setd(parent=self) if isinstance(x,Node) else None
         self.__dict__['__children__'].append(x)
     def appendleft(self,x):
-        x.seta(parent=self)
+        x.setd(parent=self) if isinstance(x,Node) else None
         return self.__dict__['__children__'].appendleft(x)
     def count(self, x):
         return self.__dict__['__children__'].count(x)
     def extend(self,iterable):
-        for x in iterable:x.seta(parent=self)
+        for x in iterable:x.setd(parent=self) if isinstance(x,Node) else None
         return self.__dict__['__children__'].extend(iterable)
     def extendleft(self,iterable):
-        for x in iterable: x.seta(parent=self)
+        for x in iterable: x.setd(parent=self) if isinstance(x,Node) else None
         return self.__dict__['__children__'].extendleft(iterable)
     def insert(self,i,x):
-        x.seta(parent=self)
+        x.setd(parent=self) if isinstance(x,Node) else None
         return self.__dict__['__children__'].insert(i,x)
     def index(self,x,start=0,stop=None):
         stop=len(self.children()) if stop is None else stop
@@ -95,17 +179,28 @@ class Node(metaclass=NodeMetaClass):
         index=self.index(v1)
         self.remove(v1)
         self.insert(index,v2)
+        return self
+    def replace_var(self,v1,v2):
+        for att in self.attr():
+            if v1 is att.value:
+                if att.type==T.ARG:att.value=v2
+                else:self.update_attr(**{att.name:v2})
+            return self
+        for v1 in self.children():
+            return self.replace(v1,v2)
+        return self
     def replacewith(self,node):
+        if isinstance(node,str):node=Text(node)
         return self.parent().replace(self,node)
     def __getitem__(self, item):
         if isinstance(item,str):
             return self.find(sel=item)[0]
         return self.children()[item]
     def __setitem__(self, key, value):
-        value.seta(parent=self)
+        value.setd(parent=self)
         return self.__dict__['__children__'].__setitem__(key,value)
     def __call__(self, *args):
-        if not len(args):return self.children()
+        if not len(args):return self
         args=list(args)
         for i in range(len(args)):
             if isinstance(args[i],str):
@@ -114,16 +209,19 @@ class Node(metaclass=NodeMetaClass):
                     args[i]=Comment(s.lstrip('<!--').rstrip('-->'))
                 else:
                     args[i]=Text(s)
+
         self.__dict__['__children__'] = deque(args)
         for i in self.children():
-            i.seta(parent=self)
+            i.setd(parent=self) if isinstance(i,Node) else None
         return self
 
     def __getattr__(self, key):
-        return self.__dict__['__attrs__'].get(key, None)
+        kw=self.getd('kwattrs').get(key, None)
+        if kw:return kw.value
+        else:raise AttributeError('No such attribute named %s'%(key))
 
     def __setattr__(self, key, value):
-        self.__dict__['__attrs__'][key] = value
+        return self.update_attr(**{key:value})
 
     def set_attribute(self, key, value):
         self.__dict__[key] = value
@@ -131,15 +229,15 @@ class Node(metaclass=NodeMetaClass):
     def get_attribute(self, *args, **kwargs):
         return self.__dict__.get(*args, **kwargs)
 
-    def seta(self, **kwargs):
+    def setd(self, **kwargs):
         for k, v in kwargs.items():
             self.set_attribute('__%s__' % (k), v)
 
-    def geta(self, key, *args, **kwargs):
+    def getd(self, key, *args, **kwargs):
         return self.get_attribute('__%s__' % (key), *args, **kwargs)
     def match(self,**kwargs):
         if '__node_type__' in kwargs.keys():
-            if not self.__node_type__==kwargs['__node_type__']:return False
+            if not self.getd('node_type')==kwargs['__node_type__']:return False
             kwargs.pop('__node_type__')
         if '_class' in kwargs.keys():
             if (not self._class) or (not set(kwargs['_class'].split()).issubset(set(self._class.split()))):return False
@@ -147,6 +245,17 @@ class Node(metaclass=NodeMetaClass):
         for k,v in kwargs.items():
             if not self.__getattr__(k)==v:return False
         return True
+    def find_var(self, sel=None,kws=None, res_list=None):
+        if sel:kws=parse_selector(sel);
+        if not res_list:res_list={'list':FindResult()}
+        for att in self.attr():
+            if 'match' in dir(att.value) and att.value.match(**kws):
+                res_list['list'].append(att.value)
+        for ch in self.children():
+            if ch.match(**kws):res_list['list'].append(ch)
+        for ch in self.children():
+            ch.find_var(kws=kws,res_list=res_list)
+        return res_list['list']
     def find(self, sel=None,kws=None, res_list=None):
         if sel:kws=parse_selector(sel);
         if not res_list:res_list={'list':FindResult()}
@@ -156,6 +265,22 @@ class Node(metaclass=NodeMetaClass):
         return res_list['list']
     def __str__(self):
         return self.to_string()
+
+    def compile(self):
+        return Text(self.to_string())
+    def render(self,**kwargs):
+        for k,v in kwargs.items():
+            ns = self.find_var('var[varname=%s]'%(k))
+            for n in ns:
+                n.replacewith(v)
+        return self
+    def tofile(self,fp):
+        from wpkit.basic import PowerDirPath
+        PowerDirPath(fp).tofile()(self.to_string())
+        return self
+    def print(self,depth=0):
+        print(self.to_string(depth=depth))
+        return self
     def get_children_string(self,depth=0):
         def to_string(ch,depth=0):
            return ch.to_string(depth=depth) if isinstance(ch,Node) else '\n'+self.__indent__*depth+str(ch)
@@ -163,29 +288,46 @@ class Node(metaclass=NodeMetaClass):
         mid = '\n' + self.__indent__ * depth if len(self.__dict__['__children__']) else ''
         content = ''.join([to_string(ch, depth=depth + 1) for ch in self.__dict__['__children__']])
         return content+mid
-    def to_string(self, depth=0):
+    def get_string(self,depth=0):
         def to_string(ch,depth=0):
            return ch.to_string(depth=depth) if isinstance(ch,Node) else '\n'+self.__indent__*depth+str(ch)
 
-        attrs = ' '.join(['%s="%s"' % ('class' if k == '_class' else k, v) for k, v in self.attrs().items()])
+        attrs = ' '.join([str(att) for att in self.attr()])
         attrs = ' ' + attrs if len(attrs) else attrs
-        if self.__open_node__:
+        if self.getd('open_node'):
             mid='\n'+self.__indent__ * depth if len(self.__dict__['__children__']) else ''
             content=''.join([to_string(ch,depth=depth + 1) for ch in self.__dict__['__children__']])
             return '\n%s<%s%s>%s%s</%s>' % (self.__indent__ * depth,self.__node_type__,attrs,
                                                content,mid,self.__node_type__)
         else:
             return '\n%s<%s %s/>' % (self.__indent__ * depth,self.__node_type__,attrs)
-    def compile(self):
-        return Text(self.to_string())
-    def render(self,**kwargs):
-        for k,v in kwargs.items():
-            ns = self.find('var[name=%s]'%(k))
-            for n in ns:n.replacewith(v)
-        return self
-    def print(self,depth=0):
-        print(self.to_string(depth=depth))
-
+    def to_string(self, depth=0):
+        def to_string(ch,depth=0):
+           return ch.to_string(depth=depth) if isinstance(ch,Node) else '\n'+self.__indent__*depth+str(ch)
+        attrs = ' '.join([str(att) for att in self.attr()])
+        attrs = ' ' + attrs if len(attrs) else attrs
+        if self.getd('open_node'):
+            mid='\n'+self.__indent__ * depth if len(self.__dict__['__children__']) else ''
+            content=''.join([to_string(ch,depth=depth + 1) for ch in self.__dict__['__children__']])
+            return '\n%s<%s%s>%s%s</%s>' % (self.__indent__ * depth,self.__node_type__,attrs,
+                                               content,mid,self.__node_type__)
+        else:
+            return '\n%s<%s %s/>' % (self.__indent__ * depth,self.__node_type__,attrs)
+    def print_structure(self):
+        print(self.struc())
+    def struc(self,depth=0,new_line=True):
+        def to_string(ch,depth=0):
+           return ch.struc(depth=depth,new_line=new_line) if isinstance(ch,Node) else '\n'*new_line+self.__indent__*depth+str(ch)
+        attrs=' '.join([struc(att,depth=0) for att in self.attr()])
+        attrs = ' ' + attrs if len(attrs) else attrs
+        pre='\n'*new_line+self.__indent__ * depth
+        if self.getd('open_node'):
+            mid='\n'*new_line+self.__indent__ * depth if len(self.__dict__['__children__']) else ''
+            content=''.join([to_string(ch,depth=depth + 1) for ch in self.__dict__['__children__']])
+            return '%s<%s%s>%s%s</%s>' % (pre,self.__node_type__,attrs,
+                                               content,mid,self.__node_type__)
+        else:
+            return '%s<%s %s/>' % (pre,self.__node_type__,attrs)
 class FindResult(list):
     pass
 
@@ -195,13 +337,15 @@ class CloseNode(Node):
 
 class Text(Node):
     def __init__(self,content='',**kwargs):
-        self.seta(content=content)
+        self.setd(content=content)
         super().__init__(**kwargs)
+    def struc(self,depth=0,new_line=True):
+        return '\n'*new_line+depth*self.__indent__+'<%s>%s</%s>'%(self.getd('node_type'),self.getd('content'),self.getd('node_type'))
     def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+str(self.geta('content'))
+        return '\n'+self.__indent__*depth+str(self.getd('content'))
     def render(self,**kwargs):
         from jinja2 import Environment
-        tem = Environment().from_string(self.geta('content'))
+        tem = Environment().from_string(self.getd('content'))
         return Text(tem.render(**kwargs))
 
 
@@ -211,6 +355,75 @@ class Comment(Node):
         super().__init__(**kwargs)
     def to_string(self, depth=0):
         return '\n'+self.__indent__*depth+'<!--'+str(self.__dict__['content'])+'-->'
+
+class NodeList(Node,deque):
+    def __init__(self,*args):
+        deque.__init__(self,*args)
+        Node.__init__(self)
+    def struc(self,depth=0,new_line=True):
+        mid='\n'*new_line + self.__indent__ * depth
+        return mid + '<%s>'%(self.getd('node_type')) + \
+        ''.join([struc(item,depth=depth+1,new_line=new_line)  for item in self]) +\
+         mid+'</%s>'%(self.getd('node_type'))
+    def to_string(self, depth=0):
+        return ''.join([item.to_string(depth=depth) if isinstance(item,Node) else str(item) for item in self])
+
+# ------------------------vars------------------------
+class Tem(Node):pass
+class Var(Node):
+    def __init__(self, varname=None, vardefault=T.NOT_GIVEN,**kwargs):
+        super().__init__()
+        if len(kwargs):
+            assert len(kwargs)==1
+            varname,vardefault=list(kwargs.items())[0]
+        self.varname = varname
+        self.vardefault=vardefault
+    def replacewith(self,node):
+        if not isinstance(node,Node):node=Text(node)
+        self.getd('parent').replace_var(self,node)
+        return self
+    def to_string(self, depth=0):
+        d=self.vardefault
+        if d==T.NOT_GIVEN:return self.get_string(depth=depth)
+        if not d:return ''
+        if isinstance(d,Node):return d.to_string(depth=depth)
+        return str(d)
+class Jvar(Node):
+    def __init__(self,name,**kwargs):
+        self.setd(name=name)
+        super().__init__(**kwargs)
+    def __str__(self):
+        return self.to_string()
+    def to_string(self, depth=0):
+        return '{{%s}}' % (self.getd('name'))
+class For(Node):
+    def __init__(self,forwhat,**kwargs):
+        self.setd(forwhat=forwhat)
+        super().__init__(**kwargs)
+    def to_string(self, depth=0):
+        return '\n'+self.__indent__*depth+'{%for '+self.getd('forwhat')+'%}'+self.get_children_string(depth=depth)+'{%endfor%}'
+
+class If(Node):
+    def __init__(self, condition, **kwargs):
+        self.setd(condition=condition)
+        super().__init__(**kwargs)
+    def to_string(self, depth=0):
+        return '\n'+self.__indent__*depth+'{%if '+self.getd('condition')+'%}'+self.get_children_string(depth=depth)+'{%endif%}'
+class Elif(Node):
+    def __init__(self, condition, **kwargs):
+        self.setd(condition=condition)
+        super().__init__(**kwargs)
+    def to_string(self, depth=0):
+        return '\n'+self.__indent__*depth+'{%elif '+self.getd('condition')+'%}'+self.get_children_string(depth=depth)
+class Else(Node):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    def to_string(self, depth=0):
+        return '\n'+self.__indent__*depth+'{%else%}'+self.get_children_string(depth=depth)
+
+
+
+# ------------------------------------------------
 
 class Html(Node):pass
 class Head(Node):pass
@@ -222,7 +435,6 @@ class Script(Node):pass
 class Body(Node):pass
 class Div(Node):pass
 class Span(Node):pass
-class H(Node):pass
 class P(Node):pass
 class A(Node):pass
 class Img(CloseNode):pass
@@ -337,41 +549,11 @@ taglist=\
 
 
 # ----------------------------------------------------
-class Tem(Node):pass
-class Var(Node):
-    def __init__(self, name, **kwargs):
-        super().__init__(**kwargs)
-        self.name = name
-class Jvar(Node):
-    def __init__(self,name,**kwargs):
-        self.seta(name=name)
-        super().__init__(**kwargs)
-    def __str__(self):
-        return self.to_string()
-    def to_string(self, depth=0):
-        return '{{%s}}' % (self.geta('name'))
-class For(Node):
-    def __init__(self,forwhat,**kwargs):
-        self.seta(forwhat=forwhat)
-        super().__init__(**kwargs)
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+'{%for '+self.geta('forwhat')+'%}'+self.get_children_string(depth=depth)+'{%endfor%}'
 
-class If(Node):
-    def __init__(self, condition, **kwargs):
-        self.seta(condition=condition)
-        super().__init__(**kwargs)
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+'{%if '+self.geta('condition')+'%}'+self.get_children_string(depth=depth)+'{%endif%}'
-class Elif(Node):
-    def __init__(self, condition, **kwargs):
-        self.seta(condition=condition)
-        super().__init__(**kwargs)
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+'{%elif '+self.geta('condition')+'%}'+self.get_children_string(depth=depth)
-class Else(Node):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-    def to_string(self, depth=0):
-        return '\n'+self.__indent__*depth+'{%else%}'+self.get_children_string(depth=depth)
+
+
+
+
+
+
 
