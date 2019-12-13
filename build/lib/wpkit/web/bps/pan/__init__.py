@@ -1,2 +1,2 @@
-from . import pages
+# from . import pages
 from .pan import *

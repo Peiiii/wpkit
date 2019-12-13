@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/pan/pan" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/wpkit/myspace" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/wpkit/myspace2" vcs="Git" />
   </component>

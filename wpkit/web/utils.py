@@ -1,6 +1,6 @@
 from wpkit import piu
 from wpkit import pkg_info
-from wpkit.basic import join_path,IterObject,SecureDirPath,PointDict,Path
+from wpkit.basic import join_path,IterObject,SecureDirPath,PointDict,Path,DirPath,PowerDirPath
 from wpkit.basic import render_template as render
 from flask import request,render_template,redirect,make_response,jsonify
 import functools,inspect
@@ -15,6 +15,7 @@ def parse_from(*refers):
             dic={}
             for ref in refers:
                 d = ref() if callable(ref) else dict(ref)
+                d = d or {}
                 if d:dic.update(d)
             params = {}
             for ag in fargs:
@@ -59,6 +60,7 @@ class UserManager:
             if user and (user.user_email == user_email ) and (user.user_password==user_password):
                 return f()
             else:
+                # return self.login_page()
                 return self.error_page()
         return wrapper
     def signup(self):

@@ -1,4 +1,6 @@
 from wpkit.node import *
+from . import Q
+
 class script:
     class jquery(Script):__node_type__='script';src = '/pkg-resource/js/jquery-3.4.1.js'
     class propper(Script):__node_type__='script';src='/pkg-resource/js/popper.min.js'
@@ -7,7 +9,7 @@ class script:
     class myjs(Script):__node_type__='script';src="/pkg-resource/js/my.js"
 class link:
     class csslink(Link): rel = "stylesheet";__node_type__='link'
-    class bootstrap(csslink):__node_type__='link'; href="/pkg-resource/css/bootstrap.min.css"
+    class bootstrap(csslink):__node_type__='link'; href="/pkg-resource/css/bootstrap.min.css";rel = "stylesheet"
 class meta:
     boostrap=lambda :Text('<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">')
 class Htmlbase(Html):

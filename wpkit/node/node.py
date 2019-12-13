@@ -2,7 +2,12 @@ import re,inspect
 # from collections import deque
 import collections
 class deque(collections.deque):
-    def replacewith(self,x1,x2):
+    def replacewith(self,x1,x2,key=None):
+        if key and '__call__' in dir(key):
+            for x in self:
+                if key(x,x1):# matched
+                    x1=x
+                    break
         index=self.index(x1,0,len(self))
         self.remove(x1)
         self.insert(index,x2)
@@ -28,7 +33,11 @@ class NodeMetaClass(type):
         if attrs.get('__open_node__',cls.__not_found__)==cls.__not_found__:
             attrs['__open_node__']=bases[0].__dic__['__open_node__']
         if attrs.get('__node_type__',cls.__not_found__)==cls.__not_found__:
-            attrs['__node_type__']=name.lower()
+            succeed=attrs.get('__secceed_name__', T.NOT_FOUND)
+            if succeed!=T.NOT_FOUND and succeed:
+                attrs['__node_type__']=bases[0].__dic__['__node_type__']
+            else:
+                attrs['__node_type__']=name.lower()
         tmp=attrs.copy()
         for k,v in tmp.items():
             if k in special_keys:
@@ -38,6 +47,7 @@ class NodeMetaClass(type):
             if inspect.isfunction(v):continue
             if (not k.startswith('__')) or (not k.endswith('__')):
                 attrs.pop(k)
+                if k=='_class':k='class'
                 na=NodeAttr(**{k:v})
                 dic['__attrs__'].append(na)
                 dic['__kwattrs__'][k]=na
@@ -90,16 +100,29 @@ def tostr(x,**kwargs):
     if 'to_string' in dir(x):
         return x.to_string(**kwargs)
     return str(x)
+import uuid
 class NodeAttr(object):
     def __init__(self,*args,**kwargs):
-        assert len(args) or len(kwargs)
+        # assert len(args) or len(kwargs)
         assert not (len(args) and len(kwargs))
         if len(args):
             self.type=T.ARG
             self.value=args[0]
-        else:
+        elif len(kwargs):
             self.type=T.KWARG
             self.name,self.value=list(kwargs.items())[0]
+        self.qid=uuid.uuid4().hex
+    def deepcopyself(self):
+        obj=NodeAttr()
+        obj.type=self.type
+        obj.value=deepcopy(self.value)
+        obj.name=self.name
+        obj.qid=self.qid
+        return obj
+    def __qeq__(self,x1):
+        if isinstance(x1,NodeAttr) and x1.qid==self.qid:
+            return True
+        return False
     def __str__(self):
         if self.type==T.ARG:
             return str(self.value)
@@ -135,25 +158,57 @@ class StyleAttr(dict):
         return self.get(key)
     def __str__(self):
         return ";".join(['%s:%s'%(k,v) for k,v in self.items()])
+def deepcopy(x):
+    if isinstance(x,list) or isinstance(x,deque):
+        cls=x.__class__
+        tmp_list=[]
+        for item in x:
+            tmp_list.append(deepcopy(item))
+        return cls(tmp_list)
+    elif isinstance(x,dict):
+        cls=x.__class__
+        tmp_dict={}
+        for k,v in x.items():
+            tmp_dict[k]=deepcopy(v)
+        return cls(tmp_dict)
+    elif 'deepcopyself' in dir(x):
+        # if isinstance(x, NodeAttr):
+        #     print('copying styleattr...')
+        return x.deepcopyself()
+
+    return x
 class Node(metaclass=NodeMetaClass):
     __indent__=' '*4
     __open_node__=True
     def __init__(self,*args,**kwargs):
         for k,v in self.__dic__.items():
-            self.__dict__[k]=v.copy() if 'copy' in dir(v) else v
+            # self.__dict__[k]=v.copy() if 'copy' in dir(v) else v
+            self.__dict__[k]=deepcopy(v)
+            # print('v:',v)
+            # print(['%s'%i for i in v]) if isinstance(v, deque) else None
+            # print('v_copy:',deepcopy(v))
         self.setd(children=deque([]))
         self.update_attr(*args,**kwargs)
         self.setd(parent=None)
     def update_attr(self,*args,**kwargs):
+
         for a in args:
             self.__dict__['__attrs__'].append(NodeAttr(a))
         for k,v in kwargs.items():
+            k='class' if k=='_class' else k
             if isinstance(v,Node):v.setd(parent=self)
             x=NodeAttr(**{k:v})
             kwattrs=self.getd('kwattrs')
             if k in kwattrs.keys():
                 x_old=kwattrs[k]
-                self.__dict__['__attrs__'].replacewith(x_old,x)
+
+                # if k=='style':
+                #     print(k)
+                # if isinstance(x_old.value,StyleAttr):
+                #     print('x_old:',x_old)
+                # else:
+                #     print(x_old)
+                self.__dict__['__attrs__'].replacewith(x_old,x,key=lambda x1,x2: x1.__qeq__(x2))
                 kwattrs[k]=x
             else:
                 self.__dict__['__attrs__'].append(x)
@@ -164,10 +219,38 @@ class Node(metaclass=NodeMetaClass):
             self.update_attr(**kwargs)
             return self
         return self.__dict__['__attrs__']
-    def style(self,**kwargs):
+    def update_class(self,cls):
+        old_cls=self.attr('class')
+        if old_cls:old_cls=old_cls.value
+        def tolist(old_cls):
+            if old_cls:
+                old_cls = old_cls.split()
+            return old_cls or []
+        cls=set(tolist(old_cls)).union(tolist(cls))
+        cls=' '.join(cls)
+        self.update_attr(_class=cls)
+
+    def cls(self,*args):
+        if not len(args):
+            return self.attr('class').value if self.attr('class') else None
+        else:
+            self.update_class(*args)
+            return self
+
+    def css(self,**kwargs):
         if not self.attr("style"):self.attr(style=StyleAttr())
         if len(kwargs):
             self.attr("style").value.update(escape_style_dic(kwargs))
+            style=self.attr('style').value
+            self.attr(style=style)
+            # if self.__class__.__name__=='QBox':
+            #     if 'float' in kwargs.keys():
+            #         print('__attrs__:',self.getd('attrs')[0])
+            #         print('__kwattrs__:',self.getd('kwattrs')['style'])
+            #         print('Qbox style:',self.attr('style'))
+            #         print('attr:',[str(i) for i in self.attr()])
+            #         print('self:',self)
+        return self
 
     def parent(self):
         return self.getd('parent')

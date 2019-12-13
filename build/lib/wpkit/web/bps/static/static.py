@@ -6,13 +6,17 @@ from wpkit.web.resources import env
 import wpkit
 
 class BlueStatic(MyBlueprint):
-    def __init__(self,import_name=None,name='static',url_prefix='/static',static_dir='./',template=None,**kwargs):
+    def __init__(self,import_name=None,name='static',url_prefix='/static',static_dir='./',template=None,debug=False,**kwargs):
         super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,**kwargs)
+        def tprint(*args, **kwargs):
+            if debug:
+                print('**info:', *args, **kwargs)
         import os
         template = resources.default_templates['files'] if not template else template
         @self.route('/', defaults={'req_path': ''})
         @self.route(utils.join_path('/', '<path:req_path>'))
         def dir_listing(req_path):
+            tprint('req_path:',req_path)
             BASE_DIR = static_dir
             abs_path = os.path.join(BASE_DIR, req_path)
             if not os.path.exists(abs_path):

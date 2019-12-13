@@ -1,4 +1,28 @@
 import os,shutil
+class _T(str):pass
+class TMetaClass(type):
+    def __new__(cls, name, bases, attrs):
+        dic=attrs.copy()
+        for k,v in attrs.items():
+            if isinstance(v,_T):
+                dic[k]=_T(k)
+        return type.__new__(cls, name, bases, dic)
+class T(metaclass=TMetaClass):
+    NOT_FOUND=_T()
+    NOT_EXISTS=_T()
+    NO_VALUE=_T()
+    NOT_IMPLEMENTED=_T()
+    NOT_ALLOWED=_T()
+    EMPTY=_T()
+    NO_SUCH_VALUE=_T()
+    NO_SUCH_ATTR=_T()
+    NOT_GIVEN=_T()
+    FILE=_T()
+    DIR=_T()
+    LINK=_T()
+    MOUNT=_T()
+
+
 class IterObject(dict):
     __no_value__='<__no_value__>'
     def __getattr__(self, key):
@@ -10,6 +34,7 @@ class IterObject(dict):
             return v
     def __setattr__(self, key, value):
         self[key]=value
+
 class Path(str):
     __no_value__ = '<__no_value__>'
     def __init__(self,*args,**kwargs):
@@ -20,7 +45,8 @@ class Path(str):
         self.__dict__[key]=value
     def __truediv__(self, other):
         return Path(self+'/'+other)
-    def __call__(self,s):
+    def __call__(self,s=T.NO_VALUE):
+        if T.NO_VALUE:return None
         return self/s
 
 class StrictPath:
@@ -56,7 +82,29 @@ class StrictPath:
         return self.__value__
 def join_path(*args):
     return StrictPath('/'.join(args))()
-
+def standard_path(p,check=False):
+    p=str(StrictPath(p))
+    if not '/' in p:return p
+    p=p.split('/')
+    assert len(p)
+    res=[]
+    p.reverse()
+    while True:
+        if not len(p): return '/'.join(res)
+        i=p.pop()
+        if i=='':continue
+        elif i=='.':
+            if not len(res):res.append('.')
+        elif i=='..':
+            if check:return False
+            if not len(res) or res[-1]=='.':raise Exception('Error,path has reached the top when another ".." shew up.')
+            else:
+                res.pop()
+                if not len(res):res.append('.')
+        else:res.append(i)
+def join_standard_path(*args):
+    path=join_path(*args)
+    return standard_path(path)
 class SecureDirPath(str):
 
     __no_value__ = '<__no_value__>'
@@ -81,24 +129,30 @@ class SecureDirPath(str):
             return os.listdir(self)
 
 class DirPath(str):
-    __type_file__ = '<type:file>'
-    __type_dir__ = '<type:dir>'
-    __type_link__ = '<type:link>'
-    __type_mount__='<type:mount>'
-    __type_not_exists__='<type:not_exists>'
-    __no_value__ = '<__no_value__>'
+    __type_file__ = T.FILE
+    __type_dir__ = T.DIR
+    __type_link__ =T.LINK
+    __type_mount__=T.MOUNT
+    __type_not_exists__=T.NOT_EXISTS
+    __no_value__ = T.NO_VALUE
+    # __type_file__ = '<type:file>'
+    # __type_dir__ = '<type:dir>'
+    # __type_link__ = '<type:link>'
+    # __type_mount__='<type:mount>'
+    # __type_not_exists__='<type:not_exists>'
+    # __no_value__ = '<__no_value__>'
     def __init__(self,s):
         super().__init__()
     def __getattr__(self, item):
         return self/item
     def __truediv__(self, other):
         return DirPath(StrictPath(self+'/'+other))
-    def __call__(self, s=__no_value__):
+    def __call__(self, s=__no_value__,*args,**kwargs):
         assert os.path.exists(self)
         if s is self.__no_value__:
-            return self.__read__()
+            return self.__read__(*args,**kwargs)
         else:
-            return self.__write__(s)
+            return self.__write__(s,*args,**kwargs)
     def info(self):
         assert self.exists()
         info=PointDict()
@@ -148,26 +202,26 @@ class DirPath(str):
         with open(self,'a',encoding='utf-8') as f:
             f.write(s)
         return self
-    def file(self,fn):
+    def file(self,fn,encoding='utf-8'):
         fp=self/fn
         if not os.path.exists(fp):
-            with open(fp,'w',encoding='utf-8') as f:
-                f.write('')
+            with open(fp,'w',encoding=encoding) as f:
+                pass
         return fp
     def size(self):
         assert self.isfile()
         return os.path.getsize(self)
-    def __write__(self,s):
+    def __write__(self,s,encoding='utf-8',*args,**kwargs):
         assert os.path.isfile(self) or os.path.isdir(self)
         if os.path.isfile(self):
-            with open(self,'w',encoding='utf-8') as f:
+            with open(self,'w',encoding=encoding) as f:
                 f.write(s)
                 return self
         else:
             s2 = self / s
             os.mkdir(s2) if not os.path.exists(s2) else None
             return s2
-    def __read__(self):
+    def __read__(self,*args,**kwargs):
         import os
         if os.path.isfile(self):
             with open(self,'r',encoding='utf-8') as f:
@@ -189,6 +243,7 @@ class PowerDirPath(DirPath):
     def todir(self):
         if not os.path.exists(self):
             os.makedirs(self)
+        else:assert self.isdir()
         return self
     def tofile(self):
         if not os.path.exists(self):
@@ -201,8 +256,10 @@ class PowerDirPath(DirPath):
 
 class PointDict(dict):
     __no_value__='<__no_value__>'
-    def __getattr__(self, key):
-        return self.get(key)
+    def __getattr__(self, key ,default=T.NOT_GIVEN):
+        if key in self.keys():return self[key]
+        elif default!=T.NOT_GIVEN:return default
+        raise KeyError('No such key named %s'%(key))
     def __setattr__(self, key, value):
         self[key]=value
     def __call__(self, key , value=__no_value__):
@@ -254,7 +311,9 @@ class PointDict(dict):
     def pprint1(self):
         self.print1(step=5, space_around_delimiter=0, fillchar='`', cell_border='|', delimiter=':')
 
-import os
+
+
+
 def dir_tree(dir):
     dic=PointDict()
     items=os.listdir(dir)

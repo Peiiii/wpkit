@@ -19,11 +19,11 @@ def render_template(s, *args, **kwargs):
     env = Environment()
     tem = env.from_string(s)
     return tem.render(*args, **kwargs)
-def json_load(f,encoding='utf-8'):
+def json_load(f,encoding='utf-8',*args,**kwargs):
     import json
     with open(f,'r',encoding=encoding) as fp:
-        return json.load(fp)
-def json_dump(obj,fp,encoding='utf-8'):
+        return json.load(fp,*args,**kwargs)
+def json_dump(obj,fp,encoding='utf-8',*args,**kwargs):
     import json
     with open(fp,'w',encoding=encoding) as f:
-        json.dumps(obj,f)
+        json.dump(obj,f,*args,**kwargs)

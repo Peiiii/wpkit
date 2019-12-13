@@ -42,26 +42,37 @@ class Config(dict):
 
 
 class Timer:
-    def __init__(self, verbose=False):
+    def __init__(self, verbose=True,msg=None,mute=None):
         self.history = []
         self.dt_history = []
         self.steps = 0
         self.start_time = time.time()
         self.history.append(self.start_time)
         self.verbose = verbose
+        self.mute=mute
         if self.verbose:
-            print('Timer started at %s' % (self.start_time))
-
-    def step(self):
+            self.print('Timer started at %s' % (self.start_time))
+        if msg:
+            self.print(msg)
+    def print(self,*args,**kwargs):
+        if not self.mute:
+            print(*args,**kwargs)
+    def step(self,msg=None):
         t = time.time()
         dt = t - self.history[-1]
         self.dt_history.append(dt)
         self.history.append(t)
         self.steps += 1
-
         if self.verbose:
-            print('time since last step: %s' % (dt))
+            self.print('step=%s , %s time since last step: %s' % (self.steps,'msg=%s'%(msg) if msg else '',dt))
         return dt
+    def mean(self):
+        if not len(self.dt_history):return None
+        return sum(self.dt_history)/len(self.dt_history)
+    def plot_dt_history(self,title='Timer History',*args,**kwargs):
+        from matplotlib import pyplot as plt
+        plt.plot(self.dt_history)
+        plt.show(title=title,*args,**kwargs)
 
     def end(self):
         t = time.time()
@@ -71,7 +82,7 @@ class Timer:
         self.history.append(t)
         self.steps += 1
         if self.verbose:
-            print('time since last step: %s' % (dt))
+            self.print('time since last step: %s' % (dt))
         return dt
 
 def run_timer(func):

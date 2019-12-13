@@ -8,6 +8,7 @@ from ..myblueprint import MyBlueprint
 class BluePostAndDownload(MyBlueprint):
     def __init__(self,import_name=None,name='PostAndDownload',data_dir='/var/www/html',url_prefix='/post_and_download',**kwargs):
         super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,**kwargs)
+        self.data_dir=data_dir
         assert utils.pkg_info.is_linux()
         import wpkit.linux as pylinux
         @self.route('/', methods=['GET'])
@@ -18,5 +19,5 @@ class BluePostAndDownload(MyBlueprint):
             data = request.get_json()
             url = data['url']
             print('get url: %s' % url)
-            pylinux.tools.wget_download(url, out_dir=data_dir)
+            pylinux.tools.wget_download(url, out_dir=self.data_dir)
             return 'seccess'

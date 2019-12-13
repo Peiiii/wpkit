@@ -1,6 +1,6 @@
 import git as g
 import os
-from wpkit.basic import PowerDirPath,PointDict
+from wpkit.basic import PowerDirPath,PointDict,join_path,standard_path
 class Pan:
     def __init__(self,path):
         assert os.path.exists(path)
@@ -29,6 +29,16 @@ class Pan:
         git.push('origin','master')
     def goback(self,n=1):
         self.git.reset('--hard','HEAD'+'^'*n)
+    def local_path(self,path):
+        path=join_path(self.lpath,path)
+        try:
+            path=standard_path(path,check=True)
+        except:
+            return None
+        return path
+    def saveFile(self,filename,location,content):
+        f = PowerDirPath(location)/filename
+        return f(content)
     def newFile(self,filename,location,content=None):
         loc=PowerDirPath(location)
         return loc.file(filename)(content) if content is not None else loc.file(filename)
@@ -48,10 +58,13 @@ class Pan:
     def execute(self,cmd):
         cmd=PointDict.from_dict(cmd)
         op,params=cmd.op,cmd.params
+        if 'location' in params.keys():
+            params['location']=self.local_path(params['location'])
         if op=='newFile':return self.newFile(**params)
         if op=='newDir':return self.newDir(**params)
         if op=='getFile':return self.getFile(**params)
         if op=='getDir':return self.getDir(**params)
+        if op=='saveFile':return self.getDir(**params)
         if op=='delete':return self.delete(**params)
         if op=='synch':return self.push()
         if op=='pull':return self.pull()
