@@ -5,7 +5,7 @@
 import json,os,shutil
 from collections import deque
 from uuid import uuid4
-from wpkit.basic import T,PointDict,PowerDirPath
+from wpkit.basic import T,PointDict,PowerDirPath,Status,StatusSuccess,StatusError
 
 def json_load(f,encoding='utf-8',*args,**kwargs):
     import json
@@ -86,8 +86,6 @@ class BackupDB(PointDict):
         self.config=self.setup_configfile()
         self.config.update(ignore_duplicated=ignore_duplicated,max_depth=max_depth)
         self.load_config()
-        # self.ignore_duplicated=ignore_duplicated
-        # self.max_depth=max_depth
     def setup_configfile(self):
         config=FileDict(self.configfile)
         return config
@@ -145,6 +143,19 @@ class BackupDB(PointDict):
         dic = {}
         json_dump(dic, self.dicpath,indent=4)
         return dic
+    def execute(self,cmd):
+        cmd=PointDict.from_dict(cmd)
+        op,params=cmd.op,cmd.params
+        if op=='add':
+            res=self.add(params['key'],params['value'])
+        elif op=='get':
+            res=self.get(params['key'],params.get('default',None))
+        elif op=='delete':
+            res=self.delete(params['key'])
+        else:
+            assert op=='recover'
+            res=self.recover(params['key'],params['step'])
+        return res
 RecordClassDict={}
 class RecordMataClass(type):
     def __new__(cls, name, bases, attrs):

@@ -9,6 +9,9 @@ var tlog= function(text) {
         console.log(text);
     }
 };
+var isdefined=function (obj) {
+    return typeof obj != "undefined";
+};
 var postJson=function (url, data) {
     return $.ajax({
         type: "POST",
@@ -112,6 +115,7 @@ return {
     T:T,
     simpleMakeResizable:simpleMakeResizable,
     makeDraggable:makeDraggable,
+    isdefined:isdefined,
     postJson:postJson
 }
 }();

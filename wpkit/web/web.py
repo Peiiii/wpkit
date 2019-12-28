@@ -50,7 +50,7 @@ def get_default_app(import_name,static_dir_dic=None):
     from wpkit.web import bps
     app = App(import_name=import_name)
     app.add_blueprint(bps.BlueWelcomePage(app=app,import_name=import_name,name='welcome',url_prefix='/'))
-    app.add_blueprint(bps.BlueStatic(import_name=import_name,name='files',url_prefix='/files'))
+    app.add_blueprint(bps.BlueStatic(import_name=import_name,name='files',url_prefix='/files',static_dir='../'))
     app.add_multi_static(static_dir_dic) if static_dir_dic else None
     app.add_blueprint(bps.BlueBoard(import_name=import_name,name='board',url_prefix='/board'))
     if pkg_info.is_linux():

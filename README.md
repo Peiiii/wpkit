@@ -1,6 +1,30 @@
 # wpkit
 ### *StartLogging*
-
+`0.2.2.4`:
+```pydocstring
+Add to wpkit.pan:
+    class LocalFSHandle:
+        A handle to operate files and dirs
+Add wpkt.services:
+    class LocalFSServer:
+        Combine falsk app and LocalFSHandle as one
+        Serves on specific port and dir to handle requests from frontend
+    class DBServer:
+        Combine flask app and BackupDB as one
+        Serves as a cloud database
+[Frontend]
+Add to pan.js:
+    class RemoteDB & class RemoteFS:
+        Helper classes to communicate with backend LocalFSServers and DBServers
+Add to win.js:
+    class QMenubar:
+        GUI component
+Other:
+    Improve helper functions of class QWindow
+    Add support for deleting files@dirs to explorer.js
+    Add support for saving file to editor.js
+@date:2019-12-28
+```
 
 `0.2.1.6`:
 ```

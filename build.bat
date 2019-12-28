@@ -1,3 +1,3 @@
 del "dist\*.gz" /f
 del "dist\*.whl" /f
-python setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel

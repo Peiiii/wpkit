@@ -1,13 +1,21 @@
 explorerjs = function () {
     var QWindow = winjs.QWindow;
-    var getDir = panjs.getDir;
-    var getFile = panjs.getFile;
-    var newFile = panjs.newFile;
-    var newDir = panjs.newDir;
+    var pan=new panjs.Pan("http://127.0.0.1:8000/fs/cmd");
     var Editor = edjs.Editor;
     var T = wpjs.T;
     var genUid = wpjs.genUid;
-
+    class FSItem{
+        constructor(type,name) {
+            this.type=type;
+            this.name=name;
+        }
+        init(){
+        }
+        appendTo(parent){
+        }
+        source(){
+        }
+    }
     class Explorer {
         constructor(el) {
             if ($.isPlainObject(el)) {
@@ -36,7 +44,7 @@ explorerjs = function () {
                 el: `#${this.uid}`,
                 delimiters: ['<%', '%>'],
                 data: {
-                    items: getDir('./', './'),
+                    items: pan.getDir('./', './'),
                     location: "./",
                     root_path: './',
                     loc_history: ['./'],
@@ -46,6 +54,26 @@ explorerjs = function () {
                     log: function (text) {
                         text = text || 'expolorer info....';
                         console.log(text);
+                    },
+                    dialog:function(e){
+                        console.log('window:',this.window);
+                        // this.window.dialog();
+                        this.window.input((text)=>{
+                            console.log('get text:',text);
+                        });
+                        console.log('dialog sent...');
+                    },
+                    input:function(msg,callback){
+                      this.window.input(msg,(text)=>{callback(text);})
+                    },
+                    confirm:function(msg,callback){
+                      this.window.confirm(msg,callback);
+                    },
+                    info:function(msg,callback){
+                      this.window.confirm(msg,callback);
+                    },
+                    warn:function(msg,callback){
+                      this.window.confirm(msg,callback);
                     },
                     forward: function (name) {
                         this.loc_history.push(this.location + '/' + name);
@@ -66,42 +94,80 @@ explorerjs = function () {
                     },
                     refresh: function () {
                         var loc = this.loc_history.slice(-1)[0];
-                        this.items = getDir(this.root_path, loc);
+                        this.items = pan.getDir(this.root_path, loc);
                         this.location = loc;
-                    },
-                    dialog:function(e){
-                        console.log('window:',this.window);
-                        // this.window.dialog();
-                        this.window.input((text)=>{
-                            console.log('get text:',text);
-                        });
-                        console.log('dialog sent...');
-                    },
-                    input:function(msg,callback){
-                      this.window.input(msg,(text)=>{
-                            callback(text);
-                      })
                     },
                     tryNewFile: function (e) {
                         var self=this;
                         this.input('What is the file name?',function (fn) {
-                            newFile(self.location,fn);self.refresh();
+                            pan.newFile(self.location,fn);self.refresh();
                         })
                     },
                     tryNewDir: function (e) {
                         var self=this;
                         this.input('What is the directory name?',function (dn) {
-                            newDir(self.location,dn);self.refresh();
+                            pan.newDir(self.location,dn);self.refresh();
                         })
                     },
-                    trySaveFile: function (e) {
+                    trySaveFile: function (location,filename,content) {
+                        var res=pan.saveFile(location,filename,content);
+                        if(!res){this.warn("Cannot save file! An error occured!")}
+                        else{this.info("Succeeded!")}
 
                     },
-                    tryDeleteFile: function (e) {
-
+                    tryDeleteFile: function (name) {
+                        var self=this;
+                        this.confirm(`Are You sure to delete the file ${name}?`,function () {
+                            pan.deleteFile(self.location, name);
+                            self.refresh();
+                        })
                     },
-                    tryDeleteDir: function (e) {
-
+                    tryDeleteDir: function (name) {
+                        var self=this;
+                        this.confirm('Are You sure to delete the directory?',function () {
+                            pan.deleteDir(self.location, name);
+                            self.refresh();
+                        })
+                    },
+                    tryDelete:function(e){
+                        var selected=this.selected();
+                        console.log(e,selected)
+                        selected.map((v,i)=>{
+                            var item=$(v);
+                            var type=item.attr("itemtype");
+                            var name=item.attr("itemname");
+                            if(type==T.DIR)this.tryDeleteDir(name);
+                            else if(type==T.FILE)this.tryDeleteFile(name);
+                        })
+                    },
+                    unselectAllItems:function(){
+                        var el=$(this.$el);
+                        var items=el.find(".flist-item");
+                        items.map((v,i)=>{
+                            var item=$(i);
+                            // item.attr("item-selected","false");
+                            item.removeClass("fitem-selected");
+                        });
+                    },
+                    selectItem:function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        //console.log(e)
+                        var obj = $(e.target).parent();
+                        this.unselectAllItems();
+                        // obj.attr("item-selected","true");
+                        obj.addClass("fitem-selected");
+                    },
+                    selected:function(){
+                        var el=$(this.$el);
+                        var items=el.find(".flist-item");
+                        var selected=[];
+                        items.map((i,v)=>{
+                           var item=$(v);
+                           // if(item.attr("item-selected")=="true"){selected.push(v)}
+                           if(item.hasClass("fitem-selected")){selected.push(v)}
+                        });
+                        return selected;
                     },
                     updateView: function (e) {
                         console.log(e.target);
@@ -113,8 +179,12 @@ explorerjs = function () {
                                 this.forward(name);
                                 break;
                             case T.FILE:
-                                var content = getFile(this.location, name);
-                                var ed=new Editor();
+                                var content = pan.getFile(this.location, name);
+                                var ed=new Editor({
+                                    pan:pan,
+                                    location:this.location,
+                                    filename:name
+                                });
                                 ed.add_content(content);
                                 ed.show();
                                 break;
@@ -133,16 +203,16 @@ explorerjs = function () {
 
         source() {
             return {
-                template: `<div class="w-100 h-100 explorer" id="${this.uid}">
+                template: `<div class="w-100 h-100 explorer" id="${this.uid}" @click="unselectAllItems">
         <div class="text-info head">
             <span class="label-primary menu-item" @click="goHome">Home</span><span @click="backward" class="label-public menu-item">Back</span>
             <span class="label-primary menu-item" @click="tryNewFile">New File</span><span class="label-public menu-item" @click="tryNewDir">New Dir</span>
-            <span @click="refresh" class="label-primary menu-item">Refresh</span>
+            <span @click="tryDelete" class="label-primary menu-item">Delete</span><span @click="refresh" class="label-primary menu-item">Refresh</span>
         </div>
-        <div class="body">
-            <div class="flist-item" v-bind:itemname="fileitem.name" v-bind:itemtype="fileitem.type"
+        <div class="body" >
+            <div class="flist-item" v-bind:itemname="fileitem.name" v-bind:itemtype="fileitem.type" 
                  v-for="fileitem in items">
-                <label @click="updateView"><%fileitem.name%></label>
+                <label @dblclick="updateView" @click="selectItem" ><%fileitem.name%></label>
                 <label><%fileitem.type%></label>
             </div>
         </div>
@@ -175,7 +245,9 @@ explorerjs = function () {
             color: orange;
             overflow: auto;
         }
-
+        #${this.uid} .fitem-selected{
+            background-color: dodgerblue;color:white;
+        }
     </style>`,
                 style: ``
             }

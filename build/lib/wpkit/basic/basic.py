@@ -7,6 +7,7 @@ class TMetaClass(type):
             if isinstance(v,_T):
                 dic[k]=_T(k)
         return type.__new__(cls, name, bases, dic)
+
 class T(metaclass=TMetaClass):
     NOT_FOUND=_T()
     NOT_EXISTS=_T()
@@ -21,7 +22,17 @@ class T(metaclass=TMetaClass):
     DIR=_T()
     LINK=_T()
     MOUNT=_T()
-
+class EnumTypeMetaClass(type):
+    def __new__(cls, name, bases, attrs):
+        dic=attrs.copy()
+        for k,v in attrs.items():
+            if isinstance(v,_T):
+                dic[k]=v
+            else:
+                dic[k]=_T(k)
+        return type.__new__(cls, name, bases, dic)
+class WT(metaclass=EnumTypeMetaClass):
+    Error=0
 
 class IterObject(dict):
     __no_value__='<__no_value__>'
@@ -503,3 +514,17 @@ class DirTree(FileDirDict):
         return size
     def pppprint(self):
         return self.pprint2()
+
+
+
+
+
+class Status(PointDict):
+    def __init__(self,success=True,msg="success",code=0,data=None,*args,**kwargs):
+        super().__init__(success=success,msg=msg,code=code,data=data,*args,**kwargs)
+class StatusSuccess(Status):
+    def __init__(self,success=True,msg="success",code=0,data=None,*args,**kwargs):
+        super().__init__(success=success,msg=msg,code=code,data=data,*args,**kwargs)
+class StatusError(Status):
+    def __init__(self,success=False,msg="failure",code=-1,data=None,*args,**kwargs):
+        super().__init__(success=success,msg=msg,code=code,data=data,*args,**kwargs)
