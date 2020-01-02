@@ -2,87 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a0f5965-4c72-4a7b-9acd-dc991265f15b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Atest/0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Atest/a=b=0.02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Atest/pngs/_inverse_b_28_a.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Atest/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Atest/test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/mysite/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/mysite/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/linux/other.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/pan/pan/note.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/deploy/test_ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-0.2.3.8-py3-none-any.whl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-0.2.3.8.tar.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/data/static/js/store.everything.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/data/templates/imview.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/data/templates/system.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/linux/other.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/projects/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/projects/pjfiles/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/projects/pjfiles/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/projects/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/services/CloudOS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/bps/dbserver/DBServer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/bps/fsserver/LocalFSServer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/examples/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/trash/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/wpkit-0.2.4.1-py3-none-any.whl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/wpkit-0.2.4.1.tar.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wpkit/run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/all.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/demo/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/basic/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/basic/basic.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/basic/functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/cv/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/cv/cv.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/data/demos/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bdist.win-amd64/wheel/wpkit/data/demos/app2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/explorer.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/explorer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/pan.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/pan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/pan.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/pan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/switches.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/switches.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/win.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/win.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/data/templates/wp.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/data/templates/wp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/gen_scripts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/gen_scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/gen_scripts/gen_scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/gen_scripts/gen_scripts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/linux/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/linux/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/linux/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/linux/tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/lib/wpkit/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/pan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/projects/pjfiles/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/projects/pjfiles/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/services/CloudOS.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/services/CloudOS.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/lib/wpkit/services/DBServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/services/DBServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/services/LocalFSServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/services/LocalFSServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/bps/pan/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/bps/pan/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/pan/pan" beforeDir="false" afterPath="$PROJECT_DIR$/data/pan/pan" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/wpkit-0.2.2.4.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/bps/dbserver/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/bps/dbserver/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/bps/fsserver/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/bps/fsserver/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/wpkit-0.2.3.8-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/wpkit-0.2.3.8.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.md" beforeDir="false" afterPath="$PROJECT_DIR$/todo.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/top_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/explorer.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/explorer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/pan.html" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/pan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/pan.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/pan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/switches.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/switches.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/win.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/win.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/data/templates/wp.js" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/data/templates/wp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/gen_scripts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/gen_scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/gen_scripts/gen_scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/gen_scripts/gen_scripts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/linux/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/linux/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/linux/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/linux/tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/services/DBServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/services/DBServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/services/LocalFSServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/services/LocalFSServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/pan/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/bps/pan/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/examples.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/trash/examples.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/projects/pjfiles/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/projects/pjfiles/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/services/CloudOS.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/services/CloudOS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/dbserver/DBServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/dbserver/DBServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/fsserver/LocalFSServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/fsserver/LocalFSServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/board/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/board/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/board/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/dbserver/DBServer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/dbserver/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/fsserver/LocalFSServer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/fsserver/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/myblueprint.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/pan/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/pan/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/pan/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/pan/pages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/pan/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/pan/pan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/post_and_download/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/post_and_download/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/post_and_download/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/post_and_download/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/sitemap/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/sitemap/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/sitemap/sitemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/sitemap/sitemap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/static/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/static/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/static/static.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/static/static.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/welcome/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/welcome/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/bps/welcome/welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/welcome/welcome.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/examples/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/upgit.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/trash/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/install.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/trash/examples.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/web.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,8 +81,8 @@
       <list>
         <option value="sitepage_extends_base" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -146,16 +119,9 @@
     <property name="node.js.selected.package.stylelint" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="sshConsole" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\work\wpkit\wpkit\web\trash" />
-      <recent name="D:\work\wpkit\wpkit" />
-      <recent name="D:\projects\pyprojects\wpkit\wpkit\data\static" />
-      <recent name="D:\projects\pyprojects\wpkit\wpkit\data\static\pkgs" />
-      <recent name="C:\Users\15353\.PyCharm2019.2\config\scratches\data\static" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\work\wpkit\wpkit\web\applications" />
       <recent name="D:\work\wpkit\wpkit\web\bps\dbserver" />
@@ -163,8 +129,15 @@
       <recent name="D:\work\wpkit\wpkit\data\static\imgs" />
       <recent name="D:\work\wpkit" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\wpkit\wpkit\web\trash" />
+      <recent name="D:\work\wpkit\wpkit" />
+      <recent name="D:\projects\pyprojects\wpkit\wpkit\data\static" />
+      <recent name="D:\projects\pyprojects\wpkit\wpkit\data\static\pkgs" />
+      <recent name="C:\Users\15353\.PyCharm2019.2\config\scratches\data\static" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.LocalFSServer">
+  <component name="RunManager" selected="Python.static">
     <configuration name="LocalFSServer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wpkit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -209,6 +182,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wpkit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/wpkit/web/applications/demo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="other" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wpkit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -231,7 +226,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="static" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wpkit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -239,34 +234,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/wpkit/web/applications/static" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wpkit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wpkit/web/applications/static/static.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -299,19 +272,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.test3" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test2" />
       <item itemvalue="Python.other" />
       <item itemvalue="Python.base" />
       <item itemvalue="Python.LocalFSServer" />
+      <item itemvalue="Python.demo" />
+      <item itemvalue="Python.static" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.static" />
+        <item itemvalue="Python.demo" />
         <item itemvalue="Python.LocalFSServer" />
         <item itemvalue="Python.base" />
         <item itemvalue="Python.other" />
-        <item itemvalue="Python.test2" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -374,7 +347,10 @@
       <workItem from="1577289705339" duration="1474000" />
       <workItem from="1577373587491" duration="2079000" />
       <workItem from="1577520152781" duration="26036000" />
-      <workItem from="1577580792928" duration="122065000" />
+      <workItem from="1577580792928" duration="122769000" />
+      <workItem from="1577941818512" duration="1129000" />
+      <workItem from="1577944620757" duration="49000" />
+      <workItem from="1577957506509" duration="19638000" />
     </task>
     <servers />
   </component>
@@ -406,42 +382,46 @@
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state x="96" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1280.770@0.30.1280.770" timestamp="1577885928460" />
-    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577547464142">
+    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577977596017">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1280.770@0.30.1280.770" timestamp="1577547464142" />
+    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1280.770@0.30.1280.770" timestamp="1577977596017" />
     <state x="446" y="132" key="#com.intellij.ide.util.MemberChooser" timestamp="1577284243632">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state x="446" y="132" key="#com.intellij.ide.util.MemberChooser/0.30.1280.770@0.30.1280.770" timestamp="1577284243632" />
+    <state x="115" y="170" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1577964752388">
+      <screen x="0" y="30" width="1280" height="770" />
+    </state>
+    <state x="115" y="170" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.30.1280.770@0.30.1280.770" timestamp="1577964752388" />
     <state x="422" y="172" key="FileChooserDialogImpl" timestamp="1577885923503">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state x="422" y="172" key="FileChooserDialogImpl/0.30.1280.770@0.30.1280.770" timestamp="1577885923503" />
-    <state width="1238" height="160" key="GridCell.Tab.0.bottom" timestamp="1577940460664">
+    <state width="1238" height="158" key="GridCell.Tab.0.bottom" timestamp="1577964074634">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="160" key="GridCell.Tab.0.bottom/0.30.1280.770@0.30.1280.770" timestamp="1577940460664" />
-    <state width="1238" height="160" key="GridCell.Tab.0.center" timestamp="1577940460664">
+    <state width="1238" height="158" key="GridCell.Tab.0.bottom/0.30.1280.770@0.30.1280.770" timestamp="1577964074634" />
+    <state width="1238" height="158" key="GridCell.Tab.0.center" timestamp="1577964074634">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="160" key="GridCell.Tab.0.center/0.30.1280.770@0.30.1280.770" timestamp="1577940460664" />
-    <state width="1238" height="160" key="GridCell.Tab.0.left" timestamp="1577940460663">
+    <state width="1238" height="158" key="GridCell.Tab.0.center/0.30.1280.770@0.30.1280.770" timestamp="1577964074634" />
+    <state width="1238" height="158" key="GridCell.Tab.0.left" timestamp="1577964074634">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="160" key="GridCell.Tab.0.left/0.30.1280.770@0.30.1280.770" timestamp="1577940460663" />
-    <state width="1238" height="160" key="GridCell.Tab.0.right" timestamp="1577940460664">
+    <state width="1238" height="158" key="GridCell.Tab.0.left/0.30.1280.770@0.30.1280.770" timestamp="1577964074634" />
+    <state width="1238" height="158" key="GridCell.Tab.0.right" timestamp="1577964074634">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="160" key="GridCell.Tab.0.right/0.30.1280.770@0.30.1280.770" timestamp="1577940460664" />
-    <state x="142" y="58" key="SettingsEditor" timestamp="1577930043063">
+    <state width="1238" height="158" key="GridCell.Tab.0.right/0.30.1280.770@0.30.1280.770" timestamp="1577964074634" />
+    <state x="142" y="58" key="SettingsEditor" timestamp="1577970941579">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="142" y="58" key="SettingsEditor/0.30.1280.770@0.30.1280.770" timestamp="1577930043063" />
-    <state x="336" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1577580794091">
+    <state x="142" y="58" key="SettingsEditor/0.30.1280.770@0.30.1280.770" timestamp="1577970941579" />
+    <state x="336" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1577957506548">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="336" y="241" key="com.intellij.ide.util.TipDialog/0.30.1280.770@0.30.1280.770" timestamp="1577580794091" />
+    <state x="336" y="241" key="com.intellij.ide.util.TipDialog/0.30.1280.770@0.30.1280.770" timestamp="1577957506548" />
     <state x="457" y="169" key="ftp.server.browser" timestamp="1577896972883">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
@@ -455,6 +435,7 @@
     <SUITE FILE_PATH="coverage/wpkit$pkg_info.coverage" NAME="pkg_info Coverage Results" MODIFIED="1574232241758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit" />
     <SUITE FILE_PATH="coverage/wpkit$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1577281419262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/wpkit$data.coverage" NAME="data Coverage Results" MODIFIED="1574220714877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web" />
+    <SUITE FILE_PATH="coverage/wpkit$static.coverage" NAME="static Coverage Results" MODIFIED="1577964063725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/applications/static" />
     <SUITE FILE_PATH="coverage/wpkit$components.coverage" NAME="components Coverage Results" MODIFIED="1575392217688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/node" />
     <SUITE FILE_PATH="coverage/wpkit$exp3.coverage" NAME="exp3 Coverage Results" MODIFIED="1575645905573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/wpkit$exp2.coverage" NAME="exp2 Coverage Results" MODIFIED="1575472737444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
@@ -466,6 +447,7 @@
     <SUITE FILE_PATH="coverage/wpkit$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1577890226458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wpkit$base.coverage" NAME="base Coverage Results" MODIFIED="1577940127657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web" />
     <SUITE FILE_PATH="coverage/wpkit$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1577280112520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/wpkit$demo.coverage" NAME="demo Coverage Results" MODIFIED="1577963899339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/applications/demo" />
     <SUITE FILE_PATH="coverage/wpkit$exp2_pan_test.coverage" NAME="exp2_pan_test Coverage Results" MODIFIED="1575702560260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/wpkit$other.coverage" NAME="other Coverage Results" MODIFIED="1577897341091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/linux" />
     <SUITE FILE_PATH="coverage/wpkit$LocalFSServer.coverage" NAME="LocalFSServer Coverage Results" MODIFIED="1577940421982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/bps/fsserver" />

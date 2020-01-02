@@ -1,5 +1,29 @@
 
 ```web2py
+==放假以后再弄了！
+下一步：整理wpkit.web模块，封装成各个可作为组件来调用，又可以作为独立的命令行可运行的应用。
+        <Base>
+            <MyBlueprint></MyBlueprint>
+            <Application></Application>
+        </Base>
+        <Utils></Utils>
+        <Resources></Resources>
+        <Applications>
+            <DBServer></DBServer>
+            <LocalFSServer></LocalFSServer>
+            <Pan></Pan>
+            <Board></Board>
+            <Navigator></Navigator>
+            <PostAndDownload></PostAndDownload>
+            ...
+            <Blog></Blog>
+            <CloudOS></CloudOS>
+            ...
+        </Applications>
+下一步：完善命令行工具
+```
+
+```web2py
 下一步：添加文件上传功能，改善文本编辑器的显示
 下一步：添加界面管理器，管理程序显示的位置和层次，以及对窗口最小化的支持
 ```

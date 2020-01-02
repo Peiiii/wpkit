@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wpkit", # Replace with your own username
-    version="0.2.3.8",
+    version="0.2.4.1",
     author="WangPei",
     author_email="1535376447@qq.com",
     description="A small example package",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/Peiiii/wpkit",
     packages=setuptools.find_packages(),
     package_dir={'wpkit':'wpkit'},
     package_data={'wpkit':[

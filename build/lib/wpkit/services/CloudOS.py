@@ -1,7 +1,8 @@
 import threading
 def run_server1(import_name,host,port=80):
     import wpkit
-    from wpkit.web.bps import pan, MyBlueprint
+    from wpkit.web.applications.all import BluePan
+    from wpkit.web import MyBlueprint
     app = wpkit.web.get_default_app(import_name)
 
     bp_pan = pan.BluePan(import_name)
@@ -26,3 +27,5 @@ def start_server(import_name,host='127.0.0.1',port1=80,port2=8002):
     t1.join()
     t2.join()
 
+if __name__ == '__main__':
+    start_server(__name__)

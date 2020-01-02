@@ -72,7 +72,7 @@ class Pan(LocalFSHandle):
         git.remote('add', 'origin', github_path)
         git.pull('origin', 'master')
         git.config("--global","push.default","simple")
-        git.push("--set-upstream","origin","master")
+        # git.push("--set-upstream","origin","master")
         # git.branch('--set-upstream-to=origin/master', 'master')
         return cls(path=path)
     def pull(self):
@@ -83,9 +83,16 @@ class Pan(LocalFSHandle):
         git=self.git
         git.add('.')
         git.commit('-m','test')
-        git.push('origin','master')
+        # git.push('origin','master')
+        git.push("--set-upstream", "origin", "master")
     def goback(self,n=1):
         self.git.reset('--hard','HEAD'+'^'*n)
+    def destroy(self):
+        try:
+            PowerDirPath(self.lpath).rmself()
+        except:
+            pass
+
 
 
 
