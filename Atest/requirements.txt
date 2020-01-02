@@ -1,0 +1,5 @@
+flask 
+gitpython
+matplotlib
+numpy 
+opencv-python

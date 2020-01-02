@@ -7,6 +7,16 @@ import functools,inspect
 from jinja2 import Environment,PackageLoader
 env=Environment(loader=PackageLoader('wpkit.data','templates'))
 import inspect
+
+def rename_func(name):
+    def decorator(func):
+        func.__name__=name
+        @functools.wraps(func)
+        def new_func(*args,**kwargs):
+            return func(*args,**kwargs)
+        return new_func
+    return decorator
+
 def parse_from(*refers):
     def decorator(f):
         fargs = inspect.getfullargspec(f).args

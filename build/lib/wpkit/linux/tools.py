@@ -35,14 +35,16 @@ def zip_dir(src,dst=None):
     return r
 def add_bash_script_as_service(bpath):
     name=os.path.basename(bpath)
-    cmd='rm -f /etc/init.d/%s;cp %s /etc/init.d/;cd /etc/init.d/;chmod +x mysite;\
-     chkconfig --add %s;chkconfig %s on'%(name,bpath,name,name)
+    cmd='rm -f /etc/init.d/%s;cp %s /etc/init.d/;cd /etc/init.d/;chmod +x %s;\
+     chkconfig --add %s;chkconfig %s on'%(name,bpath,name,name,name)
     return  shell_cmd(cmd)
 def add_py_to_service(service_name,project_dir,script_file_path):
+    project_dir=os.path.abspath(project_dir)
+    script_file_path=os.path.abspath(script_file_path)
     from ..gen_scripts import gen_scripts
-    gen_scripts.gen_service(dst_file=service_name,service_name=service_name,
+    gen_scripts.gen_service(dst_file=project_dir+'/'+service_name,service_name=service_name,
                             project_dir=project_dir,script_file_name=script_file_path)
-    add_bash_script_as_service(service_name)
+    add_bash_script_as_service(project_dir+'/'+service_name)
 
 if __name__ == '__main__':
     # git_clone(git_link)

@@ -1,7 +1,7 @@
 
 from wpkit.piu import BackupDB
 from flask import Flask,jsonify
-from wpkit.web.utils import parse_json
+from wpkit.web.utils import parse_json,parse_json_and_form
 from wpkit.basic import PointDict,Status,StatusSuccess,StatusError
 from flask_cors import CORS
 class DBServer(Flask):
@@ -14,7 +14,7 @@ class DBServer(Flask):
 
     def add_handlers(self):
         @self.route(self.url,methods=['POST'])
-        @parse_json
+        @parse_json_and_form
         def do_cmd(cmd):
             print("cmd:",cmd)
             try:

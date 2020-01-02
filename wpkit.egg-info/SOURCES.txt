@@ -1,5 +1,7 @@
 README.md
 setup.py
+mysite/__init__.py
+mysite/main.py
 wpkit/__init__.py
 wpkit/data.py
 wpkit/heart.py
@@ -23,6 +25,7 @@ wpkit/data/__pycache__/__init__.cpython-36.pyc
 wpkit/data/__pycache__/__init__.cpython-37.pyc
 wpkit/data/demos/app.py
 wpkit/data/demos/app2.py
+wpkit/data/documents/一般应用结构说明.md
 wpkit/data/static/css/bootstrap.min.css
 wpkit/data/static/css/editormd.css
 wpkit/data/static/css/jquery-resizable.css
@@ -37,6 +40,7 @@ wpkit/data/static/css/master/editor.md-master/editormd.amd.min.js
 wpkit/data/static/css/master/editor.md-master/editormd.js
 wpkit/data/static/css/master/editor.md-master/editormd.min.js
 wpkit/data/static/css/master/editor.md-master/package.json
+wpkit/data/static/imgs/bg.jpg
 wpkit/data/static/js/bootstrap.min.js
 wpkit/data/static/js/draggable.js
 wpkit/data/static/js/dragresize.js
@@ -44,6 +48,7 @@ wpkit/data/static/js/editormd.min.js
 wpkit/data/static/js/jquery-3.4.1.js
 wpkit/data/static/js/my.js
 wpkit/data/static/js/popper.min.js
+wpkit/data/static/js/store.everything.min.js
 wpkit/data/static/js/vue-uploader.js
 wpkit/data/static/js/win.js
 wpkit/data/static/pkgs/jquery-ui/AUTHORS.txt
@@ -73,6 +78,7 @@ wpkit/data/templates/error.html
 wpkit/data/templates/explorer.js
 wpkit/data/templates/file_upload.html
 wpkit/data/templates/files.html
+wpkit/data/templates/imview.js
 wpkit/data/templates/outsite.html
 wpkit/data/templates/pan.html
 wpkit/data/templates/pan.js
@@ -87,6 +93,7 @@ wpkit/data/templates/sign3.html
 wpkit/data/templates/sitemap.html
 wpkit/data/templates/start_template.html
 wpkit/data/templates/switches.js
+wpkit/data/templates/system.js
 wpkit/data/templates/test.html
 wpkit/data/templates/testpage.html
 wpkit/data/templates/tmp.html
@@ -100,11 +107,17 @@ wpkit/examples/pan.py
 wpkit/gen_scripts/__init__.py
 wpkit/gen_scripts/gen_scripts.py
 wpkit/linux/__init__.py
+wpkit/linux/other.py
 wpkit/linux/tools.py
 wpkit/node/Q.py
 wpkit/node/__init__.py
 wpkit/node/components.py
 wpkit/node/node.py
+wpkit/projects/__init__.py
+wpkit/projects/setup.py
+wpkit/projects/pjfiles/__init__.py
+wpkit/projects/pjfiles/main.py
+wpkit/services/CloudOS.py
 wpkit/services/DBServer.py
 wpkit/services/LocalFSServer.py
 wpkit/services/__init__.py

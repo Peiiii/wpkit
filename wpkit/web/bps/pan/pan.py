@@ -6,13 +6,13 @@ from wpkit.web.resources import env
 import wpkit
 
 class BluePan(MyBlueprint):
-    def __init__(self,import_name=None,name='pan',datapath='./data/pan',url_prefix='/pan',**kwargs):
+    def __init__(self,import_name=None,name='pan',datapath='./data/pan',url_prefix='/pan',github_path="git@github.com:Peiiii/MyCloudSpace.git",**kwargs):
         super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,**kwargs)
         self.datapath = wpkit.basic.DirPath(datapath)
         self.db=wpkit.piu.Piu(path=self.datapath.db)
         self.panpath=self.datapath/'pan'
         if not self.db.get('initialized',None):
-            self.pan= Pan.init(self.panpath, github_path='http://github.com/Peiiii/MyCloudSpace')
+            self.pan= Pan.init(self.panpath, github_path=github_path)
             print('Initing Pan at %s'%(self.panpath))
             self.db.add(initialized=True)
         self.pan=Pan(self.panpath)
