@@ -5,7 +5,7 @@ import uuid, os, logging
 
 
 class Application(Flask):
-    def __init__(self, import_name=None, enable_CORS=True, *args, **kwargs):
+    def __init__(self, import_name=None, enable_CORS=True, host_pkg_resource=True, *args, **kwargs):
         super().__init__(import_name=import_name, *args, **kwargs)
         if enable_CORS:
             try:
@@ -14,6 +14,9 @@ class Application(Flask):
             except:
                 logging.warning("CORS is enabled but Flask_cors is not found, install it!")
         self.sitemap = {}
+        self.static_map={}
+        if host_pkg_resource:
+            self.host_pkg_resource()
 
     def register_blueprint(self, blueprint, url_prefix=None, **options):
         url_prefix = url_prefix or blueprint.url_prefix
@@ -27,6 +30,40 @@ class Application(Flask):
 
     def get_sitemap(self):
         return self.sitemap
+    def host_pkg_resource(self):
+        self.add_static(url_prefix="/pkg-resource", static_dir=default_static_dir)
+
+    def add_static(self, url_prefix='/files', static_dir='./'):
+        self.config_statics({url_prefix: static_dir})
+
+    def config_statics(self, static_map={}):
+        self.host_statics(static_map)
+
+    def host_statics(self, static_map={}):
+        self.static_map.update(static_map)
+        for k, v in static_map.items():
+            self._add_static(url_prefix=k, static_dir=v)
+
+    def _add_static(self, url_prefix='/files', static_dir='./', template=None):
+        template = get_template_by_name("files") if not template else template
+        url_prefix = url_prefix.rstrip('/')
+
+        @self.route(url_prefix + '/', defaults={'req_path': ''})
+        @self.route(url_prefix + join_path('/', '<path:req_path>'))
+        @rename_func("dir_listing_" + uuid.uuid4().hex)
+        def dir_listing(req_path):
+            BASE_DIR = static_dir
+            abs_path = os.path.join(BASE_DIR, req_path)
+            abs_path=os.path.abspath(abs_path)
+            if not os.path.exists(abs_path):
+                return abort(404)
+            if os.path.isfile(abs_path):
+                return send_file(abs_path)
+            if os.path.isdir(abs_path):
+                fns = os.listdir(abs_path)
+                fps = [join_path(url_prefix, req_path, f) for f in fns]
+                return template.render(files=zip(fps, fns))
+
 
 
 class MyBlueprint(Blueprint):
@@ -50,6 +87,7 @@ class MyBlueprint(Blueprint):
     def register(self, app, options, first_registration=False):
         if not hasattr(app, 'sitemap'):
             app.sitemap = {}
+        self.app=app
         name = self.nickname if self.nickname else self.name
         app.sitemap[name] = self.url_prefix
         Blueprint.register(self, app, options, first_registration)

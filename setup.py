@@ -3,9 +3,26 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+def get_version():
+    import os
+    vf='version.txt'
+    if not os.path.exists(vf):
+        f=open(vf,'w')
+        f.write(str(249))
+        f.close()
+    with open(vf,'r') as f:
+        n=f.read()
+        n=int(n)
+    with open(vf,'w') as f:
+        f.write(str(n+1))
+    n=n+1
+    n='.'.join(list(str(n)))
+    return n
+version=get_version()
+print("version:",version)
 setuptools.setup(
     name="wpkit", # Replace with your own username
-    version="0.2.4.1",
+    version=version,
     author="WangPei",
     author_email="1535376447@qq.com",
     description="A small example package",

@@ -25,6 +25,7 @@ class LocalFSServer(MyBlueprint):
                 res = self.fs.execute(cmd)
                 res = StatusSuccess(data=res)
             except:
+                raise
                 res = StatusError()
                 return res
             return jsonify(res)
@@ -45,7 +46,10 @@ class LocalFSServer(MyBlueprint):
             "/files":self.fs.lpath
         })
         def getUrl(location,name):
-            return 'http://%s:%s'%(self.host,self.port)+ self.url_prefix+'/files/'+self.fs.local_path(location+'/'+name)
+            # print("getUrlK")
+            res='http://%s:%s'%(self.app.host,self.app.port)+ self.url_prefix+'/files/'+self.fs.local_path(location+'/'+name)
+            print("res",res)
+            return res
         self.fs.add_cmd('getUrl',getUrl)
 
 if __name__ == '__main__':

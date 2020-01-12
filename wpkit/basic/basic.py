@@ -95,15 +95,23 @@ def join_path(*args):
     return StrictPath('/'.join(args))()
 def standard_path(p,check=False):
     p=str(StrictPath(p))
-    if not '/' in p:return p
+    # print(p)
+    # if not '/' in p:return p
     p=p.split('/')
     assert len(p)
     res=[]
     p.reverse()
     while True:
-        if not len(p): return '/'.join(res)
+        if not len(p):
+            if len(res)>1 and '.' in res:
+                for char in res:
+                    if char=='.':
+                        res.remove(char)
+            return '/'.join(res)
         i=p.pop()
-        if i=='':continue
+        if i=='':
+            res.append('')
+            continue
         elif i=='.':
             if not len(res):res.append('.')
         elif i=='..':
@@ -251,6 +259,7 @@ class PowerDirPath(DirPath):
             shutil.rmtree(self)
         else:
             os.remove(self)
+        return self
     def todir(self):
         if not os.path.exists(self):
             os.makedirs(self)

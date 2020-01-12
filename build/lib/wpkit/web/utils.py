@@ -101,6 +101,19 @@ class UserManager:
     def __init__(self,dbpath='./data/user_db',home_url='/'):
         self.db=piu.Piu(dbpath)
         self.home_url=home_url
+    def exists_user(self,email):
+        if not self.get_user(email):return False
+        return True
+    def users(self):
+        return self.db.keys()
+    def add_user(self,email,info={}):
+        self.db.add(email,info)
+    def get_user(self,email):
+        return self.db.get(email,None)
+    def update_user(self,email,info={}):
+        if not self.get_user(email):
+            self.add_user(email)
+        self.db.get(email).update(info)
     def status(self,status,**kwargs):
         return jsonify(dict(status=status,**kwargs))
     def home_page(self,**kwargs):
@@ -117,7 +130,7 @@ class UserManager:
         def wrapper(user_email,user_password):
             if not (user_email and user_password):
                 return self.login_page()
-            user=self.db.get(user_email,None)
+            user=self.get_user(user_email)
             user=PointDict.from_dict(user) if user else user
             if not user:
                 return self.signup_page()
@@ -137,7 +150,7 @@ class UserManager:
                 msg="Email has been taken"
                 log(msg)
                 return jsonify(StatusError(msg=msg))
-            self.db.add(user_email,{'user_email':user_email,'user_password':user_password})
+            self.add_user(user_email,{'user_email':user_email,'user_password':user_password})
             log(self.db.get(user_email))
             resp=make_response(self.status(status=self.__status_succeeded__,redirect=self.home_url))
             resp.set_cookie('user_email',user_email)
@@ -150,7 +163,7 @@ class UserManager:
             @log_func()
             @parse_form
             def do_login(user_email, user_password):
-                print("log***:", user_email, user_password)
+                log("log***:", user_email, user_password)
                 if not self.db.get(user_email, None):
                     msg = "Email doesn't exists."
                     print(msg)

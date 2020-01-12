@@ -23,7 +23,12 @@ class Piu:
     def setup(self):
         if self._exists():return json_load(self.dicpath)
         return self._make()
-
+    def keys(self):
+        return self.dic.keys()
+    def values(self):
+        return self.dic.values()
+    def items(self):
+        return self.dic.items()
     def add(self, *args, **kwargs):
         assert len(args) == 0 or len(args) == 2
         if len(args):
