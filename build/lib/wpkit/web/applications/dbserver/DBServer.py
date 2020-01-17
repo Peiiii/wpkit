@@ -4,6 +4,7 @@ from flask import Flask,jsonify
 from wpkit.web.utils import parse_json,parse_json_and_form
 from wpkit.basic import PointDict,Status,StatusSuccess,StatusError
 from wpkit.web.base import MyBlueprint,Application
+from wpkit.web import utils,resources
 
 class DBServer(MyBlueprint):
     def __init__(self,import_name='__main__',dbpath="./data/db",url_prefix='/db',nickname="DBServer",*args,**kwargs):
@@ -22,6 +23,9 @@ class DBServer(MyBlueprint):
             except:
                 res=StatusError()
             return jsonify(res)
+        @self.route('/board',methods=['GET','POST'])
+        def do_board():
+            return resources.get_template_by_name('dbboard').render()
 if __name__ == '__main__':
     DBServer(__name__).run()
 
