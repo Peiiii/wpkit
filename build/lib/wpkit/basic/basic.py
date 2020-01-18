@@ -59,6 +59,15 @@ class Path(str):
     def __call__(self,s=T.NO_VALUE):
         if T.NO_VALUE:return None
         return self/s
+    def relative_path(self,path):
+        assert path.startswith(self)
+        if self=='':
+            pass
+        else:
+            if path.startswith(self):
+                path=path[len(self):]
+            path=path.lstrip('/')
+        return self.__class__(path)
 
 class StrictPath:
     def __init__(self,s):
@@ -124,6 +133,13 @@ def standard_path(p,check=False):
 def join_standard_path(*args):
     path=join_path(*args)
     return standard_path(path)
+def get_relative_path(root,child):
+    path=child
+    path=standard_path(path)
+    root=standard_path(root)
+    # print("path:,root:",path,root)
+    assert path.startswith(root)
+    return path[len(root):]
 class SecureDirPath(str):
 
     __no_value__ = '<__no_value__>'
@@ -180,6 +196,9 @@ class DirPath(str):
         info.mtime=self.getmtime()
         info.type=self.type()
         return info
+    def list(self):
+        assert self.isdir()
+        return os.listdir(self)
     def type(self):
         if self.isfile():return self.__type_file__
         if self.isdir():return self.__type_dir__
@@ -197,7 +216,7 @@ class DirPath(str):
     def isabs(self):
         return os.path.isabs(self)
     def abspath(self):
-        return os.path.abspath(self)
+        return self.__class__(os.path.abspath(self))
     def lexists(self):
         return os.path.lexists(self)
     def exists(self):

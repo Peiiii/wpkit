@@ -83,7 +83,9 @@ class MyBlueprint(Blueprint):
         if host_pkg_resource:
             self.host_pkg_resource()
         self.app = Application(self.import_name, enable_CORS=self.enable_CORS)
-
+    def get_url(self,url=''):
+        from wpkit.basic import standard_path
+        return standard_path(self.url_prefix+'/'+url)
     def register(self, app, options, first_registration=False):
         if not hasattr(app, 'sitemap'):
             app.sitemap = {}

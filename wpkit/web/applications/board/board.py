@@ -11,7 +11,7 @@ class BlueBoard(MyBlueprint):
         @self.route('/')
         def do_board():
             data = self.db.get('board_data', '')
-            return utils.render(resources.get_default_template_string('board'), content=data)
+            return  resources.get_template_by_name('board').render(content=data)
         @self.route('/post', methods=['POST'])
         def do_board_post():
             data = request.get_json()

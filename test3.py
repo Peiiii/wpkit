@@ -1,2 +1,5 @@
-from wpkit.projects.setup import setup_default
-setup_default()
+from wpkit.basic import standard_path
+
+x='/spk//def//'
+x=standard_path(x)
+print(x)

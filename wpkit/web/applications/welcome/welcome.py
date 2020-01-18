@@ -6,8 +6,7 @@ class BlueWelcomePage(MyBlueprint):
         super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,**kwargs)
         @self.route('/')
         def do_root():
-            temf = resources.default_templates['welcome']
-            return utils.render(open(temf, 'r', encoding='utf-8').read(),context=self.app)
+            return resources.get_template_by_name('welcome.tem').render(links=self.app.sitemap)
     def register(self, app, *args,**kwargs):
         self.app=app
         super().register(app,*args,**kwargs)

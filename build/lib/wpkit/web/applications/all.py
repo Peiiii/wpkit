@@ -7,3 +7,4 @@ from .sitemap import BlueSitemap
 from .welcome import BlueWelcomePage
 from .static import BlueStatic
 from .demo import DemoApp
+from .blogserver import BlogServer

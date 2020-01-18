@@ -29,7 +29,15 @@ class Piu:
         return self.dic.values()
     def items(self):
         return self.dic.items()
+
     def add(self, *args, **kwargs):
+        assert len(args) == 0 or len(args) == 2
+        if len(args):
+            assert isinstance(args[0], str)
+            kwargs.update({args[0]: args[1]})
+        self.dic.update(**kwargs)
+        self._save()
+    def set(self, *args, **kwargs):
         assert len(args) == 0 or len(args) == 2
         if len(args):
             assert isinstance(args[0], str)
@@ -100,7 +108,8 @@ class BackupDB(PointDict):
     def setup(self):
         if self._exists(): return json_load(self.dicpath)
         return self._make()
-
+    def set(self,*args,**kwargs):
+        return self.add(*args,**kwargs)
     def add(self, *args, **kwargs):
         assert len(args) == 0 or len(args) == 2
         if len(args):
@@ -153,6 +162,8 @@ class BackupDB(PointDict):
         op,params=cmd.op,cmd.params
         if op=='add':
             res=self.add(params['key'],params['value'])
+        elif op=='set':
+            res=self.set(params['key'],params['value'])
         elif op=='get':
             res=self.get(params['key'],params.get('default',None))
         elif op=='delete':
