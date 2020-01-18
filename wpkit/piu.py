@@ -1,6 +1,4 @@
-'''
-需要继续改进，改善对record的支持
-'''
+
 
 import json,os,shutil
 from collections import deque
