@@ -127,10 +127,11 @@ class BluePan(MyBlueprint):
             user=usman.get_user(user_email)
             print('cmd:', cmd)
             try:
+
                 res = self.pans[user_email].execute(cmd)
                 res=StatusSuccess(data=res)
             except:
-                raise
+                # raise
                 res=StatusError()
             print('res:', res)
             return utils.jsonify(res)

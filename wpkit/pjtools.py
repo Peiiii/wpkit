@@ -84,6 +84,14 @@ class Timer:
         if self.verbose:
             self.print('time since last step: %s' % (dt))
         return dt
+DEFALUT_TIMER=None
+def timer_step(msg=None):
+    global DEFALUT_TIMER
+    if not DEFALUT_TIMER:
+        DEFALUT_TIMER=Timer()
+    else:
+        DEFALUT_TIMER.step(msg)
+
 
 def run_timer(func):
     name = func.__name__

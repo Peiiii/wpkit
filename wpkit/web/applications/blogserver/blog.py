@@ -49,9 +49,13 @@ class BlogServer(MyBlueprint):
         items = dict(zip(names, urls))
         return resources.Pages.links.render(links=items)
     def do_view_file(self,path):
+        # print("path:",path)
         if path.endswith('.md'):
             tem=self.get_template('view_md.tem',os.path.dirname(path))
             return tem.render(markdown_data=PowerDirPath(path)())
+        elif path.endswith('.page'):
+            tem=self.get_template(os.path.basename(path),os.path.dirname(path))
+            return tem.render()
         elif path.endswith('.txt') or \
                 path.endswith('.json') or \
                 path.endswith('.bat') or \
@@ -99,6 +103,10 @@ class BlogServer(MyBlueprint):
         view_urls = [standard_path(rel_path_url+'/' + vname) for vname in vnames]
         urls=[standard_path(rel_path_url+'/'+name) for name in names]
         return rel_path,names,urls,view_urls
+
+
+if __name__ == '__main__':
+    BlogServer(url_prefix='/').run()
 
 
 

@@ -77,6 +77,7 @@ pkg_env=Environment(
     loader=pkg_tem_loader
 )
 class Pages:
+    base=pkg_env.get_template('base.html')
     links=get_template_by_name('links')
     view_text_file=pkg_env.get_template('view_file.tem')
     view_markdown_file=pkg_env.get_template('view_md.tem')

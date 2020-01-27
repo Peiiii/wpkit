@@ -68,7 +68,7 @@ def parse_from(*refers):
     def decorator(f):
         fargs = inspect.getfullargspec(f).args
         @functools.wraps(f)
-        def wrapper():
+        def wrapper(*args,**kwargs):
             dic={}
             for ref in refers:
                 d = ref() if callable(ref) else dict(ref)
@@ -79,7 +79,8 @@ def parse_from(*refers):
                 params[ag] = dic.get(ag, None)
             # print("args:",fargs)
             # print("params:",params)
-            return f(**params)
+            params.update(kwargs)
+            return f(*args,**params)
         return wrapper
     return decorator
 def get_form():return request.form
@@ -127,7 +128,7 @@ class UserManager:
     def login_required(self,f):
         @functools.wraps(f)
         @parse_cookies
-        def wrapper(user_email,user_password):
+        def wrapper(user_email,user_password,*args,**kwargs):
             if not (user_email and user_password):
                 return self.login_page()
             user=self.get_user(user_email)
@@ -135,7 +136,7 @@ class UserManager:
             if not user:
                 return self.signup_page()
             if user and (user.user_email == user_email ) and (user.user_password==user_password):
-                return f()
+                return f(*args,**kwargs)
             else:
                 # return self.login_page()
                 return self.error_page()

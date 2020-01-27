@@ -103,6 +103,7 @@ class StrictPath:
 def join_path(*args):
     return StrictPath('/'.join(args))()
 def standard_path(p,check=False):
+    # if (len(p)<=4 and p[1:]=='://') or (len(p)==3 and p[1:]==':/'):return p[:3]
     p=str(StrictPath(p))
     # print(p)
     # if not '/' in p:return p
@@ -116,7 +117,10 @@ def standard_path(p,check=False):
                 for char in res:
                     if char=='.':
                         res.remove(char)
-            return '/'.join(res)
+            path='/'.join(res)
+            if len(path)==2 and path[1]==':':
+                path=path+'/'
+            return path
         i=p.pop()
         if i=='':
             res.append('')
@@ -130,6 +134,7 @@ def standard_path(p,check=False):
                 res.pop()
                 if not len(res):res.append('.')
         else:res.append(i)
+
 def join_standard_path(*args):
     path=join_path(*args)
     return standard_path(path)
@@ -188,17 +193,51 @@ class DirPath(str):
             return self.__read__(*args,**kwargs)
         else:
             return self.__write__(s,*args,**kwargs)
-    def info(self):
+    def info(self,format=False):
         assert self.exists()
-        info=PointDict()
+        info=FSItemInfo()
         info.atime=self.getatime()
         info.ctime=self.getctime()
         info.mtime=self.getmtime()
         info.type=self.type()
+        info.name=self.basename()
+        info.size=os.path.getsize(self)
+        if format:
+            info.pretty_format()
         return info
+    def tranverse_info(self,format=False,depth=-1):
+        info=self.info(format=format)
+        if depth==1:
+            return info
+        if self.isdir():
+            info.children=[]
+            for item in self.children():
+                info.children.append(item.tranverse_info(format=format,depth=depth-1))
+        return info
+    def children(self):
+        children=[self.join_path(item) for item in self.listdir()]
+        return children
+    def files(self):
+        items=[]
+        for item in self.listdir():
+            item=self.__class__(item)
+            if item.isfile():
+                items.append(item)
+        return items
+    def dirs(self):
+        items=[]
+        for item in self.listdir():
+            item=self.__class__(item)
+            if item.isdir():
+                items.append(item)
+        return items
+    def join_path(self,path):
+        return self/path
     def list(self):
         assert self.isdir()
         return os.listdir(self)
+    def listdir(self):
+        return self.list()
     def type(self):
         if self.isfile():return self.__type_file__
         if self.isdir():return self.__type_dir__
@@ -350,7 +389,13 @@ class PointDict(dict):
     def pprint1(self):
         self.print1(step=5, space_around_delimiter=0, fillchar='`', cell_border='|', delimiter=':')
 
-
+class FSItemInfo(PointDict):
+    def pretty_format(self):
+        self.atime=to_datetime_str(self.atime)
+        self.ctime=to_datetime_str(self.ctime)
+        self.mtime=to_datetime_str(self.mtime)
+        self.size=pretty_format_size(self.size)
+        return self
 
 
 def dir_tree(dir):
@@ -365,7 +410,28 @@ def dir_tree(dir):
     return dic
 
 
-
+def pretty_format_size(size):
+    def gen_str(size,type):
+        if size%1==0:return '%d %s'%(size,type)
+        return '%.2f %s'%(size,type)
+    def inrange(s):
+        if size>=0 and size <1000:
+            return True
+    if inrange(size):return gen_str(size,'Bytes')
+    size/=1024
+    if inrange(size):return gen_str(size,'KB')
+    size/=1024
+    if inrange(size):return gen_str(size,'MB')
+    size/=1024
+    if inrange(size):return gen_str(size,'GB')
+    size/=1024
+    if inrange(size):return gen_str(size,'TB')
+    size/=1024
+    return gen_str(size,'PB')
+def to_datetime_str(t):
+    import time
+    t=time.gmtime(t)
+    return time.strftime('%Y-%m-%d %H:%M:%S',t)
 class FileDirDict(PointDict):
     __type_file__='<type:file>'
     __type_dir__='<type:dir>'

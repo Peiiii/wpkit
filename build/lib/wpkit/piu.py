@@ -27,7 +27,6 @@ class Piu:
         return self.dic.values()
     def items(self):
         return self.dic.items()
-
     def add(self, *args, **kwargs):
         assert len(args) == 0 or len(args) == 2
         if len(args):
@@ -337,7 +336,8 @@ class Table(PointDict):
                 v.init(self.helper)
             self.dic[k] = v
         self._save()
-
+    def set(self,*args,**kwargs):
+        return self.add(*args,**kwargs)
     def delete(self, key):
         del self.dic[key]
         self._save()

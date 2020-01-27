@@ -68,6 +68,7 @@ class LocalFSHandle:
         #     params['location']=self.true_path(params['location'])
         if op in self.cmd_dict.keys():
             # print(self.cmd_dict[op](**params))
+            # print("params:",params)
             res= self.cmd_dict[op](**params)
             # print("res:",res)
             return res

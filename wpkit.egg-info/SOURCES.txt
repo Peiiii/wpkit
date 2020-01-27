@@ -60,6 +60,7 @@ wpkit/data/templates/form.html
 wpkit/data/templates/imview.js
 wpkit/data/templates/index.tem
 wpkit/data/templates/links.html
+wpkit/data/templates/os.js
 wpkit/data/templates/pan.html
 wpkit/data/templates/pan.js
 wpkit/data/templates/post.html
@@ -83,11 +84,15 @@ wpkit/data/templates/work_no_use.html
 wpkit/data/templates/wp.js
 wpkit/examples/__init__.py
 wpkit/examples/pan.py
+wpkit/fsutil/__init__.py
+wpkit/fsutil/dir_dict.py
 wpkit/gen_scripts/__init__.py
 wpkit/gen_scripts/gen_scripts.py
 wpkit/linux/__init__.py
 wpkit/linux/other.py
 wpkit/linux/tools.py
+wpkit/money/__init__.py
+wpkit/money/fund.py
 wpkit/node/Q.py
 wpkit/node/__init__.py
 wpkit/node/components.py
@@ -102,6 +107,7 @@ wpkit/services/DBServer.py
 wpkit/services/LocalFSServer.py
 wpkit/services/__init__.py
 wpkit/web/__init__.py
+wpkit/web/apputils.py
 wpkit/web/base.py
 wpkit/web/resources.py
 wpkit/web/utils.py
@@ -117,6 +123,8 @@ wpkit/web/applications/demo/__init__.py
 wpkit/web/applications/demo/demo.py
 wpkit/web/applications/fsserver/LocalFSServer.py
 wpkit/web/applications/fsserver/__init__.py
+wpkit/web/applications/osserver/__init__.py
+wpkit/web/applications/osserver/os.py
 wpkit/web/applications/pan/__init__.py
 wpkit/web/applications/pan/pages.py
 wpkit/web/applications/pan/pan.py
