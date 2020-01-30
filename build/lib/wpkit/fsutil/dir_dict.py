@@ -1,4 +1,4 @@
-import os,shutil,glob,json
+import os,shutil,glob,json,functools
 from wpkit.basic import PowerDirPath,standard_path,get_relative_path
 
 def _copy_dir(src,dst):
@@ -123,11 +123,10 @@ class FakeOS:
         if  path and os.path.exists(path):
             path=os.path.abspath(path)
         self.path=standard_path(path) if path else path
-    def execute(self,cmd):
-        op=cmd['op']
-        params=cmd['params']
-        return self.__getattribute__(op)(*params)
-
+    def _relpath(self,root,path):
+        return get_relative_path(root,path)
+    def _standard_path(self,*args,**kwargs):
+        return standard_path(*args,**kwargs)
     def _fakepath(self,path):
         return get_relative_path(self.path,path)
     def _truepath(self,path):
@@ -140,11 +139,11 @@ class FakeOS:
         fs=[self._fakepath(path) for path in fs]
         return fs
 
-    def tranverse_info(self,path,format=True,depth=-1):
-        return self.info(path,format,depth)
-    def info(self, path,format=True,depth=2):
+    def tranverse_info(self,path,depth=-1,format=True):
+        return self.info(path,depth,format)
+    def info(self, path,depth=2,format=True):
         path = self._truepath(path)
-        return PowerDirPath(path).tranverse_info(format=format,depth=depth)
+        return PowerDirPath(path).tranverse_info(depth=depth,format=format)
     def open(self, file, mode='r'):
         file = self._truepath(file)
         return open(file, mode)
@@ -177,6 +176,10 @@ class FakeOS:
     def ismount(self,path):
         path = self._truepath(path)
         return os.path.ismount(path)
+    def dirname(self,path):
+        return os.path.dirname(path)
+    def basename(self,path):
+        return os.path.basename(path)
     def listdir(self,path):
         path=self._truepath(path)
         return os.listdir(path)

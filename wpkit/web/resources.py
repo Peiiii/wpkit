@@ -1,4 +1,5 @@
 import pkg_resources, os
+from wpkit.basic import load_config
 from .utils import SecureDirPath, PointDict, pkg_info, Path, DirPath
 from jinja2 import Environment, PackageLoader
 import jinja2
@@ -25,7 +26,7 @@ def get_default_template_string(tem):
 
 
 env = Environment(loader=PackageLoader('wpkit.data', 'templates'))
-
+sys_env=env
 
 def get_template_by_name(fn='base'):
     if not '.' in fn: fn += '.html'
@@ -44,8 +45,6 @@ def get_js_string_by_name(fn):
 
 def get_env(path=None):
     path=path or './'
-
-
     _loader = ChoiceLoader([
         FileSystemLoader(path),
         PrefixLoader({
@@ -55,14 +54,14 @@ def get_env(path=None):
             ]),
             'user': ChoiceLoader([
                 FileSystemLoader('data/templates'),
-                FileSystemLoader('data/blogs'),
+                FileSystemLoader('data/user/templates'),
             ])
         }),
         ChoiceLoader([
             FileSystemLoader(data_path + '/static'),
             FileSystemLoader(data_path + '/templates'),
             FileSystemLoader('data/templates'),
-            FileSystemLoader('data/blogs'),
+            FileSystemLoader('data/user/templates'),
         ])
     ])
     env = Environment(
@@ -81,3 +80,34 @@ class Pages:
     links=get_template_by_name('links')
     view_text_file=pkg_env.get_template('view_file.tem')
     view_markdown_file=pkg_env.get_template('view_md.tem')
+def get_one_exist_path(paths):
+    for path in paths:
+        if os.path.exists(path):
+            return path
+    return None
+def get_exist_template_from_env(env,tems):
+    for tem in tems:
+        try:
+            return env.get_template(tem)
+        except:
+            pass
+def get_page_template(path):
+    if os.path.isdir(path):
+       dirname=path
+       env=get_env(dirname)
+       tem=get_exist_template_from_env(env,['index.page','map.tem'])
+       return tem
+    else:
+        dirname=os.path.dirname(path)
+        basename=os.path.basename(path)
+        env=get_env(dirname)
+        if path.endswith('.page'):
+            return env.get_template(basename)
+
+def get_book(path):
+    config=load_config(path)
+    env=get_env(os.path.dirname(path))
+    tem=env.get_template('book.tem')
+    os_url=config.get('os_url','/os')
+    book_path=config.get('book_path','./')
+    return tem.render(os_url=os_url,book_path=book_path)

@@ -205,14 +205,14 @@ class DirPath(str):
         if format:
             info.pretty_format()
         return info
-    def tranverse_info(self,format=False,depth=-1):
+    def tranverse_info(self,depth=-1,format=False):
         info=self.info(format=format)
         if depth==1:
             return info
         if self.isdir():
-            info.children=[]
+            info.children={}
             for item in self.children():
-                info.children.append(item.tranverse_info(format=format,depth=depth-1))
+                info.children.update({item.basename():item.tranverse_info(depth=depth-1,format=format)})
         return info
     def children(self):
         children=[self.join_path(item) for item in self.listdir()]

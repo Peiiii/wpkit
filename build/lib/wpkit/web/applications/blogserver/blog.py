@@ -1,8 +1,8 @@
 from wpkit.web.base import  MyBlueprint
-from wpkit.web.resources import get_env
+from wpkit.web.resources import get_env,get_book
 from wpkit.web import resources
 from wpkit.piu import Piu
-from wpkit.basic import Path,DirPath,standard_path,PowerDirPath,get_relative_path
+from wpkit.basic import Path,DirPath,standard_path,PowerDirPath,get_relative_path,load_config
 from flask import send_file
 import os
 
@@ -55,7 +55,12 @@ class BlogServer(MyBlueprint):
             return tem.render(markdown_data=PowerDirPath(path)())
         elif path.endswith('.page'):
             tem=self.get_template(os.path.basename(path),os.path.dirname(path))
-            return tem.render()
+            dir = path if os.path.isdir(path) else os.path.dirname(path)
+            fs = os.listdir(dir)
+            map = dict({f: f for f in fs})
+            return tem.render(map=map)
+        elif path.endswith('.book'):
+            return get_book(path)
         elif path.endswith('.txt') or \
                 path.endswith('.json') or \
                 path.endswith('.bat') or \

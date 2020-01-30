@@ -80,8 +80,6 @@ class BluePan(MyBlueprint):
 
             return wrapper
 
-
-
         self.route('/login', methods=['post'])(usman.login(redirect_to=redirect(location=self.url_prefix)))
         self.route('/login', methods=['get'])(usman.login_page)
         self.route('/signup', methods=['post'])(usman.signup)

@@ -2,50 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a0f5965-4c72-4a7b-9acd-dc991265f15b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/dir_dict.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/money/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/money/fund.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/osserver/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/osserver/os.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/web/apputils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-1.0.5.0-py3-none-any.whl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-1.0.5.0.tar.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/dir_dict.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/money/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/money/fund.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/osserver/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/applications/osserver/os.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/web/apputils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/basic/basic.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/basic/basic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/piu.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/piu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/pjtools.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/pjtools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/all.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/all.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/blogserver/blog.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/blogserver/blog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/pan/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/pan/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/resources.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/wpkit-1.0.4.3-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/wpkit-1.0.4.3.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/exp.py" beforeDir="false" afterPath="$PROJECT_DIR$/exp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test3.py" beforeDir="false" afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/version.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/basic/basic.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/basic/basic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/pan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/piu.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/piu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/pjtools.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/pjtools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/all.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/all.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/basic/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/basic/functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/fsutil/dir_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/fsutil/dir_dict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/web/applications/blogserver/blog.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/blogserver/blog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/osserver/os.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/osserver/os.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/web/applications/pan/pan.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/pan/pan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wpkit/web/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/resources.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,9 +37,9 @@
       <list>
         <option value="sitepage_extends_base" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -107,7 +73,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;HTML" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/data/blogs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/data/blogs/admin" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.stylelint" value="true" />
@@ -122,22 +88,22 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\work\wpkit\wpkit\money" />
-      <recent name="D:\work\wpkit\wpkit" />
-      <recent name="D:\work\wpkit\data\blogs" />
-      <recent name="D:\work\wpkit\data\blogs\admin" />
-      <recent name="D:\work\wpkit\wpkit\web\trash" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\wpkit\data\blogs\admin" />
+      <recent name="D:\work\wpkit\data\blogs\db" />
       <recent name="D:\work\wpkit\data\blogs" />
       <recent name="D:\work\wpkit\data" />
       <recent name="D:\work\wpkit\wpkit\data\static\css\hljs" />
-      <recent name="D:\work\wpkit\wpkit\data\static\js" />
-      <recent name="D:\work\wpkit\wpkit\web\applications" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\wpkit\data\blogs\admin" />
+      <recent name="D:\work\wpkit\data\blogs" />
+      <recent name="D:\work\wpkit\wpkit\money" />
+      <recent name="D:\work\wpkit\wpkit" />
+      <recent name="D:\work\wpkit\wpkit\web\trash" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.os">
+  <component name="RunManager" selected="Python.exp">
     <configuration name="blog" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wpkit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -152,6 +118,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wpkit/web/applications/blogserver/blog.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wpkit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -226,42 +214,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wpkit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.test" />
-      <item itemvalue="Python.test3" />
       <item itemvalue="Python.blog" />
       <item itemvalue="Python.exp" />
       <item itemvalue="Python.os" />
+      <item itemvalue="Python.demo" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.os" />
+        <item itemvalue="Python.demo" />
         <item itemvalue="Python.exp" />
+        <item itemvalue="Python.os" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.blog" />
-        <item itemvalue="Python.test3" />
       </list>
     </recent_temporary>
   </component>
@@ -341,7 +307,7 @@
       <workItem from="1579521373895" duration="15473000" />
       <workItem from="1579955143982" duration="3017000" />
       <workItem from="1580103008119" duration="4498000" />
-      <workItem from="1580112553744" duration="23459000" />
+      <workItem from="1580112553744" duration="100544000" />
     </task>
     <servers />
   </component>
@@ -377,14 +343,14 @@
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state x="233" y="77" key="#Shell_Script/0.30.1280.770@0.30.1280.770" timestamp="1577984869193" />
-    <state x="96" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580136871357">
+    <state x="96" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580181530165">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="96" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1280.770@0.30.1280.770" timestamp="1580136871357" />
-    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580105791179">
+    <state x="96" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1280.770@0.30.1280.770" timestamp="1580181530165" />
+    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580299743950">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1280.770@0.30.1280.770" timestamp="1580105791179" />
+    <state x="400" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1280.770@0.30.1280.770" timestamp="1580299743950" />
     <state x="446" y="132" key="#com.intellij.ide.util.MemberChooser" timestamp="1577284243632">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
@@ -401,30 +367,30 @@
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state x="93" y="123" width="453" height="583" key="DirDiffDialog/0.30.1280.770@0.30.1280.770" timestamp="1579348474857" />
-    <state x="422" y="172" key="FileChooserDialogImpl" timestamp="1578396970333">
+    <state x="422" y="172" key="FileChooserDialogImpl" timestamp="1580227999344">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="422" y="172" key="FileChooserDialogImpl/0.30.1280.770@0.30.1280.770" timestamp="1578396970333" />
-    <state width="1238" height="197" key="GridCell.Tab.0.bottom" timestamp="1580138715765">
+    <state x="422" y="172" key="FileChooserDialogImpl/0.30.1280.770@0.30.1280.770" timestamp="1580227999344" />
+    <state width="1238" height="197" key="GridCell.Tab.0.bottom" timestamp="1580362002296">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="197" key="GridCell.Tab.0.bottom/0.30.1280.770@0.30.1280.770" timestamp="1580138715765" />
-    <state width="1238" height="197" key="GridCell.Tab.0.center" timestamp="1580138715764">
+    <state width="1238" height="197" key="GridCell.Tab.0.bottom/0.30.1280.770@0.30.1280.770" timestamp="1580362002296" />
+    <state width="1238" height="197" key="GridCell.Tab.0.center" timestamp="1580362002296">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="197" key="GridCell.Tab.0.center/0.30.1280.770@0.30.1280.770" timestamp="1580138715764" />
-    <state width="1238" height="197" key="GridCell.Tab.0.left" timestamp="1580138715764">
+    <state width="1238" height="197" key="GridCell.Tab.0.center/0.30.1280.770@0.30.1280.770" timestamp="1580362002296" />
+    <state width="1238" height="197" key="GridCell.Tab.0.left" timestamp="1580362002296">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="197" key="GridCell.Tab.0.left/0.30.1280.770@0.30.1280.770" timestamp="1580138715764" />
-    <state width="1238" height="197" key="GridCell.Tab.0.right" timestamp="1580138715765">
+    <state width="1238" height="197" key="GridCell.Tab.0.left/0.30.1280.770@0.30.1280.770" timestamp="1580362002296" />
+    <state width="1238" height="197" key="GridCell.Tab.0.right" timestamp="1580362002296">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state width="1238" height="197" key="GridCell.Tab.0.right/0.30.1280.770@0.30.1280.770" timestamp="1580138715765" />
-    <state x="142" y="58" key="SettingsEditor" timestamp="1579331615495">
+    <state width="1238" height="197" key="GridCell.Tab.0.right/0.30.1280.770@0.30.1280.770" timestamp="1580362002296" />
+    <state x="176" y="94" key="SettingsEditor" timestamp="1580355718943">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="142" y="58" key="SettingsEditor/0.30.1280.770@0.30.1280.770" timestamp="1579331615495" />
+    <state x="176" y="94" key="SettingsEditor/0.30.1280.770@0.30.1280.770" timestamp="1580355718943" />
     <state x="33" y="176" key="com.intellij.ide.util.TipDialog" timestamp="1580112553991">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
@@ -437,10 +403,10 @@
       <screen x="0" y="30" width="1280" height="770" />
     </state>
     <state width="600" height="424" key="javadoc.popup/0.30.1280.770@0.30.1280.770" timestamp="1577985548996" />
-    <state x="323" y="130" width="672" height="678" key="search.everywhere.popup" timestamp="1580114618286">
+    <state x="618" y="109" width="672" height="678" key="search.everywhere.popup" timestamp="1580355599852">
       <screen x="0" y="30" width="1280" height="770" />
     </state>
-    <state x="323" y="130" width="672" height="678" key="search.everywhere.popup/0.30.1280.770@0.30.1280.770" timestamp="1580114618286" />
+    <state x="618" y="109" width="672" height="678" key="search.everywhere.popup/0.30.1280.770@0.30.1280.770" timestamp="1580355599852" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/wpkit$pkg_info.coverage" NAME="pkg_info Coverage Results" MODIFIED="1574232241758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit" />
@@ -449,17 +415,17 @@
     <SUITE FILE_PATH="coverage/wpkit$static.coverage" NAME="static Coverage Results" MODIFIED="1577964063725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/applications/static" />
     <SUITE FILE_PATH="coverage/wpkit$components.coverage" NAME="components Coverage Results" MODIFIED="1575392217688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/node" />
     <SUITE FILE_PATH="coverage/wpkit$exp3.coverage" NAME="exp3 Coverage Results" MODIFIED="1575645905573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
-    <SUITE FILE_PATH="coverage/wpkit$os.coverage" NAME="os Coverage Results" MODIFIED="1580138616648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/wpkit$os.coverage" NAME="os Coverage Results" MODIFIED="1580181348726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/wpkit$exp2.coverage" NAME="exp2 Coverage Results" MODIFIED="1575472737444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/wpkit$bp_pan.coverage" NAME="bp_pan Coverage Results" MODIFIED="1575161372618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/bps" />
     <SUITE FILE_PATH="coverage/wpkit$basic__1_.coverage" NAME="basic (1) Coverage Results" MODIFIED="1575377618114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/basic" />
     <SUITE FILE_PATH="coverage/wpkit$pan.coverage" NAME="pan Coverage Results" MODIFIED="1575132612518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit" />
     <SUITE FILE_PATH="coverage/wpkit$basic.coverage" NAME="basic Coverage Results" MODIFIED="1575740465080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/basic" />
-    <SUITE FILE_PATH="coverage/wpkit$exp.coverage" NAME="exp Coverage Results" MODIFIED="1580136848590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/wpkit$exp.coverage" NAME="exp Coverage Results" MODIFIED="1580355673436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wpkit$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1579348830030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wpkit$base.coverage" NAME="base Coverage Results" MODIFIED="1577940127657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web" />
     <SUITE FILE_PATH="coverage/wpkit$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1577280112520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
-    <SUITE FILE_PATH="coverage/wpkit$demo.coverage" NAME="demo Coverage Results" MODIFIED="1577963899339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/web/applications/demo" />
+    <SUITE FILE_PATH="coverage/wpkit$demo.coverage" NAME="demo Coverage Results" MODIFIED="1580356291067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/wpkit$exp2_pan_test.coverage" NAME="exp2_pan_test Coverage Results" MODIFIED="1575702560260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
     <SUITE FILE_PATH="coverage/wpkit$other.coverage" NAME="other Coverage Results" MODIFIED="1577897341091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit/linux" />
     <SUITE FILE_PATH="coverage/wpkit$fund.coverage" NAME="fund Coverage Results" MODIFIED="1579523890031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wpkit" />

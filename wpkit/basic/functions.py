@@ -27,3 +27,18 @@ def json_dump(obj,fp,encoding='utf-8',*args,**kwargs):
     import json
     with open(fp,'w',encoding=encoding) as f:
         json.dump(obj,f,*args,**kwargs)
+def load_config(fp,line_split='\n',pair_split='=',encoding="utf-8"):
+    with open(fp,'r',encoding=encoding) as f:
+        lines=f.read().strip().split(line_split)
+        dic={}
+        for line in lines:
+            if line.strip().startswith('#'):continue
+            line=line.strip()
+            key,value=line.split(pair_split)
+            key=key.strip()
+            value=value.strip()
+            dic[key]=value
+        return dic
+
+
+
