@@ -2,89 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a0f5965-4c72-4a7b-9acd-dc991265f15b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/cv/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/cv/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/cv/utils/imutils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/english/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/dicdir.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/fsitem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/gitspace/StoreFolder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/gitspace/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/gitspace/gitspace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/ofile/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/ofile/ofiles.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/ofile/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/scripts/file.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/scripts/rar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/lib/wpkit/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data.rar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-1.0.7.3-py3-none-any.whl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/wpkit-1.0.7.3.tar.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exp2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exp_tutils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/cv/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/cv/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/cv/utils/imutils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/english/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/dicdir.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/fsitem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/fsutil/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/gitspace/StoreFolder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/gitspace/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/gitspace/gitspace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/ofile/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/ofile/ofiles.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/ofile/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/scripts/file.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/scripts/rar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wpkit/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wpkit/gitspace/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/basic/basic.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/basic/basic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/basic/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/basic/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/fsutil/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/fsutil/dir_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/fsutil/dir_dict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/install.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/pkg_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/pkg_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/scripts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/blogserver/blog.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/blogserver/blog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/dbserver/DBServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/dbserver/DBServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/demo/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/demo/demo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/osserver/os.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/osserver/os.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/sitemap/sitemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/sitemap/sitemap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/applications/welcome/welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/applications/welcome/welcome.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/wpkit/web/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wpkit/web/resources.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/test.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/test_ip.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/update.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/wpkit-1.0.5.1-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/wpkit-1.0.5.1.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp.py" beforeDir="false" afterPath="$PROJECT_DIR$/exp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/version.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/basic/basic.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/basic/basic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/basic/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/basic/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/fsutil/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/fsutil/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/fsutil/dir_dict.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/fsutil/dir_dict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/install.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/pkg_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/pkg_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/scripts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/blogserver/blog.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/blogserver/blog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/dbserver/DBServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/dbserver/DBServer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/demo/demo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/osserver/os.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/osserver/os.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/sitemap/sitemap.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/sitemap/sitemap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/applications/welcome/welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/applications/welcome/welcome.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wpkit/web/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/wpkit/web/resources.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -392,7 +311,7 @@
       <workItem from="1581428483412" duration="3895000" />
       <workItem from="1581592585212" duration="7785000" />
       <workItem from="1581675509914" duration="86830000" />
-      <workItem from="1581903269598" duration="28911000" />
+      <workItem from="1581903269598" duration="29127000" />
     </task>
     <servers />
   </component>
