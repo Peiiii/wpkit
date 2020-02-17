@@ -1,5 +1,11 @@
-import os,shutil
-class _T(str):pass
+import os,shutil,glob
+class _T(str):
+    def __call__(self, s):
+        if s.upper()==self or s==self:
+            return True
+        else:
+            return False
+CONST_TYPE=_T
 class TMetaClass(type):
     def __new__(cls, name, bases, attrs):
         dic=attrs.copy()
@@ -18,10 +24,31 @@ class T(metaclass=TMetaClass):
     NO_SUCH_VALUE=_T()
     NO_SUCH_ATTR=_T()
     NOT_GIVEN=_T()
+    FOLDER=_T()
     FILE=_T()
     DIR=_T()
     LINK=_T()
     MOUNT=_T()
+    IMAGE=_T()
+    TEXT=_T()
+    VIDEO=_T()
+    AUDIO=_T()
+    JSON=_T()
+    TXT=_T()
+    PY=_T()
+    JPG=_T()
+    PNG=_T()
+    JPEG=_T()
+    GIF=_T()
+    PGM=_T()
+    BMP=_T()
+    JS=_T()
+    MP4=_T()
+    AVI=_T()
+    IMAGE_FILE_EXTS=[JPG,JPEG,PNG,GIF,PGM,BMP]
+
+
+
 class EnumTypeMetaClass(type):
     def __new__(cls, name, bases, attrs):
         dic=attrs.copy()
@@ -33,6 +60,23 @@ class EnumTypeMetaClass(type):
         return type.__new__(cls, name, bases, dic)
 class WT(metaclass=EnumTypeMetaClass):
     Error=0
+def get_file_ext(path):
+    name=os.path.basename(path)
+    if not '.' in path:return None
+    ext=name.rsplit('.',maxsplit=1)[-1]
+    if ext=='':ext=None
+    return ext
+def read_file(path,type=None,encoding=None):
+    assert os.path.isfile(path)
+    type=type or get_file_ext(path) or 'TXT'
+    if type.upper() in T.IMAGE_FILE_EXTS:
+        from PIL import Image
+        return Image.open(path)
+    else:
+        if not encoding:
+            encoding='utf-8'
+        with open(path,'r',encoding=encoding) as f:
+            return f.read()
 
 class IterObject(dict):
     __no_value__='<__no_value__>'
@@ -103,6 +147,7 @@ class StrictPath:
 def join_path(*args):
     return StrictPath('/'.join(args))()
 def standard_path(p,check=False):
+    assert len(p)
     # if (len(p)<=4 and p[1:]=='://') or (len(p)==3 and p[1:]==':/'):return p[:3]
     p=str(StrictPath(p))
     # print(p)
@@ -134,6 +179,12 @@ def standard_path(p,check=False):
                 res.pop()
                 if not len(res):res.append('.')
         else:res.append(i)
+def split_path(path):
+    path=standard_path(path)
+    items=path.split('/')
+    if items[0]=='':
+        items[0]='/'
+    return items
 
 def join_standard_path(*args):
     path=join_path(*args)
@@ -214,20 +265,35 @@ class DirPath(str):
             for item in self.children():
                 info.children.update({item.basename():item.tranverse_info(depth=depth-1,format=format)})
         return info
+    def standard(self):
+        return self.__class__(standard_path(self))
+    def tranverse_files(self,func):
+        from wpkit.fsutil import tranverse_files
+        tranverse_files(self,func)
+    def tranverse_dirs(self,func):
+        from wpkit.fsutil import tranverse_dirs
+        tranverse_dirs(self,func)
+    def deepglob(self,s,res=[]):
+        res+=self.glob(s)
+        for d in self.dirs():
+            res=d.deepglob(s,res)
+        return res
+    def glob(self,s):
+        fs=glob.glob(self.join_path(s))
+        fs=[self.__class__(f) for f in fs]
+        return fs
     def children(self):
         children=[self.join_path(item) for item in self.listdir()]
         return children
     def files(self):
         items=[]
-        for item in self.listdir():
-            item=self.__class__(item)
+        for item in self.children():
             if item.isfile():
                 items.append(item)
         return items
     def dirs(self):
         items=[]
-        for item in self.listdir():
-            item=self.__class__(item)
+        for item in self.children():
             if item.isdir():
                 items.append(item)
         return items
@@ -288,6 +354,17 @@ class DirPath(str):
     def size(self):
         assert self.isfile()
         return os.path.getsize(self)
+    def todir(self):
+        if not os.path.exists(self):
+            os.makedirs(self)
+        else:assert self.isdir()
+        return self
+    def tofile(self):
+        if not os.path.exists(self):
+            self.dirname().todir().file(self.basename())
+        else:
+            assert self.isfile()
+        return self
     def __write__(self,s,encoding='utf-8',*args,**kwargs):
         assert os.path.isfile(self) or os.path.isdir(self)
         if os.path.isfile(self):
@@ -301,10 +378,10 @@ class DirPath(str):
     def __read__(self,*args,**kwargs):
         import os
         if os.path.isfile(self):
-            with open(self,'r',encoding='utf-8') as f:
-                return f.read()
+            return read_file(self)
         if os.path.isdir(self):
             return os.listdir(self)
+
 
 class PowerDirPath(DirPath):
     '''
@@ -318,17 +395,7 @@ class PowerDirPath(DirPath):
         else:
             os.remove(self)
         return self
-    def todir(self):
-        if not os.path.exists(self):
-            os.makedirs(self)
-        else:assert self.isdir()
-        return self
-    def tofile(self):
-        if not os.path.exists(self):
-            self.dirname().todir().file(self.basename())
-        else:
-            assert self.isfile()
-        return self
+
     def __truediv__(self, other):
         return PowerDirPath(DirPath(self).__truediv__(other))
 

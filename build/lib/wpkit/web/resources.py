@@ -7,7 +7,9 @@ from jinja2 import Environment, \
         BaseLoader, FileSystemLoader, \
         ChoiceLoader, DictLoader, PrefixLoader
 
-data_path = pkg_info.pkg_data_dir
+data_path = DirPath(pkg_info.pkg_data_dir)
+pkg_data_path=data_path
+pkg_document_path=pkg_data_path/'documents'
 pkg_templates_dir = DirPath(data_path) / 'templates'
 pkg_js_dir = DirPath(data_path) / 'static' / 'js'
 default_templates = PointDict.from_dict({

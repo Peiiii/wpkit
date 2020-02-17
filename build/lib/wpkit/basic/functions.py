@@ -1,4 +1,4 @@
-
+import os,glob,shutil
 def makedirs_ifneeded(d):
     import os
     os.makedirs(d) if not os.path.exists(d) else None
@@ -39,6 +39,10 @@ def load_config(fp,line_split='\n',pair_split='=',encoding="utf-8"):
             value=value.strip()
             dic[key]=value
         return dic
+
+def get_time_formated(format='%Y-%m-%d %H:%M:%S'):
+    import time
+    return time.strftime(format,time.localtime())
 
 
 

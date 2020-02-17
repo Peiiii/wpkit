@@ -67,7 +67,7 @@ class Application(Flask):
 
 
 class MyBlueprint(Blueprint):
-    def __init__(self, import_name=None, name=None, url_prefix=None, host_pkg_resource=True, static_map={},
+    def __init__(self, import_name=None, name=None,add_to_sitemap=True, url_prefix=None, host_pkg_resource=True, static_map={},
                  nickname=None, enable_CORS=True, **kwargs):
         if not import_name: import_name = "__main__"
         if not name: name = "Application" + uuid.uuid4().hex
@@ -77,12 +77,16 @@ class MyBlueprint(Blueprint):
         self.nickname = nickname
         self.blueprints={}
         self._blueprint_order=[]
+        self.add_to_sitemap=add_to_sitemap
+        self.visit_link=None
 
         self.host_statics(static_map)
         self.enable_CORS = enable_CORS
         if host_pkg_resource:
             self.host_pkg_resource()
         self.app = Application(self.import_name, enable_CORS=self.enable_CORS)
+    def get_visit_link(self):
+        pass
     def get_url(self,url=''):
         from wpkit.basic import standard_path
         return standard_path(self.url_prefix+'/'+url)
@@ -91,7 +95,8 @@ class MyBlueprint(Blueprint):
             app.sitemap = {}
         self.app=app
         name = self.nickname if self.nickname else self.name
-        app.sitemap[name] = self.url_prefix
+        if self.add_to_sitemap:
+            app.sitemap[name] =self.get_visit_link() or self.visit_link or self.url_prefix
         Blueprint.register(self, app, options, first_registration)
 
     def run(self, host="127.0.0.1", port=80, debug=True, show_url_map=True):

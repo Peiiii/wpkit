@@ -1,5 +1,7 @@
 import os,shutil,glob,json,functools
-from wpkit.basic import PowerDirPath,standard_path,get_relative_path
+from wpkit.basic import PowerDirPath,standard_path,\
+    get_relative_path,DirPath,split_path
+from wpkit.ofile import SimpleListFile,ObjectFile
 
 def _copy_dir(src,dst):
     assert os.path.exists(src)
@@ -12,7 +14,32 @@ def _copy_dir(src,dst):
             _copy_dir(path,new_path)
         elif os.path.isfile(path):
             shutil.copy(path,new_path)
+def copy_file(src,dst,overwrite=False):
+    '''
+    if dst is dir: copy into dir
+    if dst is file and overwrite: overwrite
+    if dst doesn't exist : parent should exist, use shutil.copy
+    '''
+    assert os.path.isfile(src)
+    if os.path.exists(dst):
+        if os.path.isdir(dst):
+            shutil.copy(src,dst+'/'+os.path.basename(src))
+        else:
+            if overwrite:
+                shutil.copy(src,dst)
+            else:
+                raise FileExistsError('%s is an existed file.'%(dst))
+    else:
+        parent=os.path.dirname(dst)
+        assert os.path.exists(parent)
+        shutil.copy(src,dst)
+
+
 def copy_dir(src,dst):
+    '''
+    if dst exists, copy src into dst,
+    else mkdir dst and copy src's contents into dst
+    '''
     assert os.path.exists(src)
     src=os.path.abspath(src)
     name=os.path.basename(src)
@@ -24,8 +51,15 @@ def copy_dir(src,dst):
     else:
         parent_dir=os.path.dirname(dst)
         assert os.path.exists(parent_dir)
+        os.mkdir(dst)
         _copy_dir(src,dst)
 
+def copy_fsitem(src,dst,overwrite=False):
+    assert os.path.exists(src)
+    if os.path.isdir(src):
+        copy_dir(src,dst)
+    else:
+        copy_file(src,dst,overwrite=overwrite)
 
 class DirDict(object):
     def __init__(self,name=None,realpath=None,*args,**kwargs):
@@ -127,18 +161,19 @@ class FakeOS:
         return get_relative_path(root,path)
     def _standard_path(self,*args,**kwargs):
         return standard_path(*args,**kwargs)
+    def _split_path(self,*args,**kwargs):
+        return split_path(*args,**kwargs)
     def _fakepath(self,path):
         return get_relative_path(self.path,path)
     def _truepath(self,path):
         if not self.path:
             return standard_path(path)
         return self.path+'/'+standard_path(path)
-    def glob(self,pathname,recursive=False):
+    def glob(self,pathname='./',recursive=False):
         pathname=self._truepath(pathname)
         fs=glob.glob(pathname=pathname,recursive=recursive)
         fs=[self._fakepath(path) for path in fs]
         return fs
-
     def tranverse_info(self,path,depth=-1,format=True):
         return self.info(path,depth,format)
     def info(self, path,depth=2,format=True):
@@ -147,12 +182,41 @@ class FakeOS:
     def open(self, file, mode='r'):
         file = self._truepath(file)
         return open(file, mode)
-
+    def openDB(self,path):
+        path=self._truepath(path)
+        from wpkit.piu import BackupDB
+        return BackupDB(path)
+    def openFiledict(self,path):
+        path=self._truepath(path)
+        from wpkit.piu import FileDict
+        return FileDict(path)
+    def openObjectfile(self,path):
+        path=self._truepath(path)
+        return ObjectFile(path)
+    def openSimplelistfile(self,path):
+        path=self._truepath(path)
+        return SimpleListFile(path)
+    def openFolder(self,path):
+        path=self._truepath(path)
+        from wpkit.fsutil import Folder
+        return Folder(path)
+    def dir(self,name):
+        path=self._truepath(name)
+        p=PowerDirPath(path)
+        p.todir()
+        return p
+    def file(self,name):
+        path = self._truepath(name)
+        p = PowerDirPath(path)
+        p.tofile()
+        return p
     def read(self, fp, mode='r', encoding='utf-8'):
+        fp=self._truepath(fp)
         with open(fp, mode=mode, encoding=encoding) as f:
             return f.read()
 
     def write(self, fp, s, mode='w', encoding='utf-8'):
+        fp=self._truepath(fp)
         with open(fp, mode=mode, encoding=encoding) as f:
             f.write(s)
     def newfile(self,path,mode='w',encoding='utf-8'):
@@ -180,12 +244,19 @@ class FakeOS:
         return os.path.dirname(path)
     def basename(self,path):
         return os.path.basename(path)
-    def listdir(self,path):
+    def listdir(self,path='/'):
         path=self._truepath(path)
         return os.listdir(path)
-    def remove(self,path):
+    def rmfile(self,path):
         path=self._truepath(path)
         return os.remove(path)
+    def remove(self,path):
+        if self.isdir(path):
+            return self.rmtree(path)
+        if self.isfile(path):
+            return self.rmfile(path)
+    def rmself(self):
+        shutil.rmtree(self.path)
     def rmtree(self,path):
         path = self._truepath(path)
         return shutil.rmtree(path)
@@ -195,6 +266,14 @@ class FakeOS:
     def makedirs(self,path):
         path = self._truepath(path)
         return os.makedirs(path)
+    def moveto(self,path,overwrite=False):
+        if os.path.exists(path):
+            if not overwrite:
+                raise Exception('%s already exists.'%(path))
+            else:
+                shutil.rmtree(path)
+        # print(self.path,path)
+        copy_dir(self.path,path)
     def copy(self,src,dst):
         src = self._truepath(src)
         dst = self._truepath(dst)

@@ -2,7 +2,7 @@ from wpkit.web.base import  MyBlueprint
 from wpkit.web import utils,resources
 class BlueSitemap(MyBlueprint):
     def __init__(self,import_name=None,name='sitemap',sitemap={},url_prefix='/sitemap',**kwargs):
-        super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,**kwargs)
+        super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,add_to_sitemap=False,**kwargs)
         @self.route('/')
         def do_root():
             temf = resources.default_templates['sitemap']

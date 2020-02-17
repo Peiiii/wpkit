@@ -17,7 +17,15 @@ class BlogServer(MyBlueprint):
         self.db=Piu(path=self.db_path)
         default_root_path=os.path.abspath(default_root_path)
         self.db.set('root_path',default_root_path)
+
         self.add_handlers()
+    def get_visit_link(self):
+        def get_link(path):
+            path+='.'
+            parts=path.split('/')
+            parts[-1]='view='+parts[-1][:-1]
+            return '/'.join(parts)
+        return standard_path(self.url_prefix)+'/view='
     def add_handlers(self):
         @self.route('/', defaults={'req_path': ''})
         @self.route('/<path:req_path>')

@@ -11,6 +11,7 @@ from wpkit.web.applications.osserver import OSServer
 # from wpkit.web.applications.all import BlueBoard,DBServer,LocalFSServer,BlueWelcomePage,BlueSitemap,BluePostAndDownload,BluePan
 from wpkit.web.base import Application,MyBlueprint
 from wpkit.pkg_info import is_linux
+from wpkit.web.resources import pkg_document_path
 class DemoApp(Application):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
@@ -22,6 +23,7 @@ class DemoApp(Application):
         self.register_blueprint(BluePan(url_prefix="/pan"))
         self.register_blueprint(OSServer(url_prefix="/os",nickname='OS'))
         self.register_blueprint(BlogServer(url_prefix="/blogs",default_root_path='./data/blogs'))
+        self.register_blueprint(BlogServer(url_prefix="/documents",nickname='Documentation',default_root_path=pkg_document_path))
         self.sitemap['Blogs']='/blogs/view='
         self.register_blueprint(BlueSitemap(url_prefix='/sitemap'))
 

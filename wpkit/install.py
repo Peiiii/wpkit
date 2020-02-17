@@ -1,4 +1,10 @@
 
+dependencies=[
+    'flask',
+    'Flask-Cors',
+    'fire',
+    'dulwich'
+]
 def install_requirements():
     import os
     os.system("pip3 install flask")

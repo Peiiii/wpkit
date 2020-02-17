@@ -2,7 +2,22 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.store_cache" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tmp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tmp/.this" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tmp/folder-deploy/.this" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/MyCloudSpace" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/pan/pans/123" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/pan/pans/12345" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dulwich-clone" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/file" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/folder" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/folder-deploy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/msyh" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/piudb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/remote_branch_list" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/remote_master" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/space" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/store" vcs="Git" />
   </component>
 </project>

@@ -56,7 +56,7 @@ class CloudOS(FakeOS):
 
 class OSServer(MyBlueprint):
     def __init__(self,url_prefix='/os',default_root_path='./',*args,**kwargs):
-        super().__init__(url_prefix=url_prefix,*args,**kwargs)
+        super().__init__(url_prefix=url_prefix,add_to_sitemap=False,*args,**kwargs)
         self.root_path=default_root_path
         self.os=CloudOS(self.root_path)
         self.root_path=self.os.path

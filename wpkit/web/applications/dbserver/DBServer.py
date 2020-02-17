@@ -8,7 +8,7 @@ from wpkit.web import utils,resources
 
 class DBServer(MyBlueprint):
     def __init__(self,import_name='__main__',dbpath="./data/db",url_prefix='/db',nickname="DBServer",*args,**kwargs):
-        super().__init__(import_name=import_name,url_prefix=url_prefix,nickname=nickname,enable_CORS=True,*args,**kwargs)
+        super().__init__(import_name=import_name,url_prefix=url_prefix,nickname=nickname,enable_CORS=True,add_to_sitemap=False,*args,**kwargs)
         self.db=BackupDB(path=dbpath)
         self.add_handlers()
         self.add_static(url_prefix='/',static_dir=dbpath)
