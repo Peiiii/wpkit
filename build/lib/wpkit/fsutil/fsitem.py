@@ -8,6 +8,22 @@ class FSItem:
 class File(FSItem):
     def __init__(self,path,makefile=False):
         self.path=path
+        if makefile:
+            if not os.path.exists(path):
+                open(self.path,'w').close()
+
+class TextFile(File):
+    def __init__(self,path,default=''):
+        super().__init__(path,makefile=True)
+        if self.read()=='':
+            self.write(default)
+    def read(self):
+        with open(self.path,'r',encoding='utf-8') as f:
+            return f.read()
+    def write(self,s):
+        with open(self.path,'w',encoding='utf-8') as f:
+            f.write(s)
+
 
 
 class Folder(FakeOS,FSItem):
@@ -20,6 +36,12 @@ class Folder(FakeOS,FSItem):
         path=os.path.abspath(path)
         self.path=path
         FakeOS.__init__(self,path)
+    def clean(self):
+        for ch in self.listdir():
+            if self.isdir(ch):
+                self.rmtree(ch)
+            else:
+                self.remove(ch)
     def eat(self,path,overwrite=False):
         assert os.path.exists(path)
         if os.path.isdir(path):

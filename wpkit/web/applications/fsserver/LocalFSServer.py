@@ -10,9 +10,10 @@ from wpkit.basic import Status,StatusError,StatusSuccess,PointDict
 
 class LocalFSServer(MyBlueprint):
     def __init__(self,import_name='__main__',path="./",url_prefix="/fs",nickname="LocalFSServer",*args,**kwargs):
+        self.fs = LocalFSHandle(path=path)
+        # print(self.add_to_sitemap)
         super().__init__(import_name=import_name,url_prefix=url_prefix,nickname=nickname,*args,**kwargs)
-        self.fs=LocalFSHandle(path=path)
-        self.add_handlers()
+        # print(self.add_to_sitemap)
     def add_handlers(self):
         @self.route('/',methods=['POST','GET'])
         def do_root():

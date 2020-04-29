@@ -1,3 +1,9 @@
 data
 build
 .idea
+deploy
+wpkit.egg-info
+HighSchoolLearning
+dist
+plan.md
+msyh.ttf

@@ -1,5 +1,5 @@
 import setuptools
-
+import os,glob
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -21,6 +21,7 @@ def get_version():
 version=get_version()
 print("version:",version)
 setuptools.setup(
+    executable=True,
     name="wpkit", # Replace with your own username
     version=version,
     author="WangPei",
@@ -31,11 +32,18 @@ setuptools.setup(
     url="https://github.com/Peiiii/wpkit",
     packages=setuptools.find_packages(),
     package_dir={'wpkit':'wpkit'},
+    entry_points={
+        'console_scripts': [
+            'wk = wpkit.run:main',
+        ]
+    },
     package_data={'wpkit':[
         'data/*',
         'data/templates/*','data/demos/*','data/static/*','data/static/js/*','data/static/css/*',
-        'data/static/html/*','data/*/*','data/*/*/*','data/*/*/*/*','data/*/*/*/*/*','data/*/*/*/*/*'
+        'data/static/html/*','data/*/*','data/*/*/*','data/*/*/*/*','data/*/*/*/*/*','data/*/*/*/*/*',
+        'cli/*.bat','cli/*.sh'
     ]},
+    scripts=glob.glob('wpkit/cli/*.*'),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -43,3 +51,7 @@ setuptools.setup(
     ],
     python_requires='>=3.0',
 )
+
+# import logging
+# logging.info('*'*200)
+# logging.info("This is a test message")

@@ -16,8 +16,7 @@ class DemoApp(Application):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.register_blueprint(BlueBoard(url_prefix='/board'))
-        db=DBServer(url_prefix='/db')
-        self.register_blueprint(db)
+        self.register_blueprint(DBServer(url_prefix='/db'))
         self.register_blueprint(LocalFSServer(url_prefix='/fs',path="./"))
         self.register_blueprint(BlueWelcomePage(url_prefix='/'))
         self.register_blueprint(BluePan(url_prefix="/pan"))
@@ -35,6 +34,7 @@ def demo(port=80,host=None,import_name=None):
     clean_port(port)
     host=host or get_local_ip()
     app = DemoApp(import_name or "__main__")
+    print(app.url_map)
     app.run(port=port,host=host)
 if __name__ == '__main__':
     import fire

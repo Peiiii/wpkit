@@ -1,6 +1,8 @@
-from wpkit.gitspace.StoreFolder import StoreFolder,StoreFile
+# from wpkit.gitspace.StoreFolder import StoreFolder,StoreFile,StoreItem,Store
+from wpkit.gitspace.Store import Store
 from wpkit.basic import get_time_formated
 from wpkit.utils import SimpleListFile
+from wpkit.utils import remove_fsitem
 
 
 def main():
@@ -10,10 +12,59 @@ def main():
     # test6()
     # test7()
     # test8()
-    test9()
+    # test9()
     # test10()
-
+    # get_font()
+    # test11()
+    # test12()
+    # test13()
+    # test14()
+    # test15()
+    # test16()
+    # test17()
+    # test18()
+    test19()
+    # test20()
     pass
+
+def test20():
+    store=Store()
+def test19():
+    store=Store()
+    store.get('blogs','blogs',overwrite=True)
+def test18():
+    store=Store()
+    store.get('fonts/msyh.ttf','./',overwrite=True)
+def test17():
+    store=Store()
+    store.set('blogs','data/blogs',recursive=True)
+
+
+def test16():
+    store=Store()
+    store.set('fonts/msyh.ttf','./fonts/msyh.ttf')
+
+
+def test15():
+    store=Store()
+    # store.sync_keys()
+    store.get('fonts/msyh.ttf',overwrite=True)
+def test14():
+    export('./','wpkit.dist')
+def export(path,branch):
+    StoreItem.export(path=path,remote_branch=branch)
+def test13():
+    '''upload imgs'''
+    StoreItem.uploadStoreitemRecursive('dist',remote_branch='wpkit.dist')
+def test12():
+    '''upload imgs'''
+    StoreItem.uploadStoreitemRecursive('data',remote_branch='data')
+def get_font():
+    StoreItem.export('fonts/msyh.ttf',remote_branch='msyh.ttf')
+
+def test11():
+    '''upload recursive'''
+    StoreItem.uploadStoreitemRecursive('fonts',remote_branch='fonts')
 def test10():
     folder = StoreFolder.openStorefolder(path='folder-deploy', remote_branch='folder-deploy',
                                          force_pull=False, overwrite=True)

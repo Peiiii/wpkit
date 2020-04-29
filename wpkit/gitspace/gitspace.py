@@ -1,10 +1,18 @@
+'''
+Deprecated
+'''
+
 from dulwich import porcelain as git
 from dulwich.repo import Repo
 from wpkit.fsutil.dir_dict import FakeOS
 from wpkit.basic import T
 import os, shutil, glob
 
+default_remote_location= 'https://OpenGitspace:Gitspace@123456@gitee.com/OpenGitspace/meta'
+defalut_user_location='https://OpenGitspace:Gitspace@123456@gitee.com/OpenGitspace/'
 
+def get_default_remote_location(repo):
+    return defalut_user_location+repo
 
 class errors:
     class GitSpaceError(Exception):
@@ -34,6 +42,70 @@ class GitRepo(Repo):
     def __init__(self,path):
         super().__init__(path)
 
+    def clean(self):
+        for name in os.listdir(self.path):
+            if name=='.git':continue
+            path=self.path+'/'+name
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
+    def active_branch(self):
+        return git.active_branch(self).decode()
+    def checkout_branch(self,branch='master'):
+        git.update_head(self,branch)
+        self.clean()
+        co_ref = b'HEAD'
+        repo_path=self.path
+        from dulwich.repo import Repo
+        from dulwich.index import build_index_from_tree
+        repo = Repo(repo_path)
+        indexfile = repo.index_path()
+        obj_sto = repo.object_store
+        tree_id = repo[co_ref].tree
+        build_index_from_tree(repo_path, indexfile, obj_sto, tree_id)
+        x=list(obj_sto.iter_tree_contents(tree_id))
+        x=[obj_sto.iter_tree_contents(tree_id)]
+    def branch_create(self,name):
+        git.branch_create(self,name)
+    def pull(self, remote_location, branch):
+        git.pull(self, remote_location, branch)
+    def branch_list(self):
+        return list(to_string_iterable(git.branch_list(self)))
+    def status(self,silent=False):
+        repo = self
+        msg = git.status(repo)
+        if not silent:
+            print(msg)
+        return msg
+    def add_all(self):
+        repo = self
+        status=git.status(self)
+        paths = status.untracked + status.unstaged
+        paths = [p.decode() if isinstance(p, bytes) else p for p in paths]
+        paths = [self.path + '/' + p for p in paths]
+        if not paths:
+            import logging
+            logging.warning('Working tree is clean. Nothing to add.')
+            return
+        paths.append(self.path)
+        git.add(repo, paths)
+    def commit(self,msg='commit somthing'):
+        git.commit(self, msg)
+    def push(self, remote_location, branch):
+        git.push(self, remote_location, branch)
+
+
+
+class GitRepoPlus:
+    def __init__(self,path):
+        self.grepo=GitRepo(path)
+    def _init_branches(self):
+        grepo=self.grepo
+        # try:
+            # grepo.pull()
+    def _true_branch_name(self,name):
+        import uuid
     def clean(self):
         for name in os.listdir(self.path):
             if name=='.git':continue
@@ -224,23 +296,23 @@ class GitSpace(GitSpaceRepo, FakeOS):
         GitSpaceRepo.__init__(self, path, remote_location)
         FakeOS.__init__(self, path)
 
-default_remote_location= 'https://OpenGitspace:Gitspace@123456@gitee.com/OpenGitspace/meta'
+
 def open_default(path,branch='master'):
     # url = 'https://OpenGitspace:Gitspace@123456@github.com/OpenGitspace/meta'
     url =default_remote_location
     return GitSpace.openSpace(path, remote_path=url,branch=branch)
 
-class Store:
+class SimpleStore:
     def __init__(self,remote_location=None,cache_dir=None):
         self.remote_location=remote_location or default_remote_location
         self.cache_dir=cache_dir or '.store_cache'
         self._setup()
     def _get_config(self):
-        cfg = self.space.openFieldict('.store.cfg')
+        cfg = self.space.openFiledict('.store.cfg')
         return cfg
     def _setup(self):
         space=GitSpace.openSpace(path=self.cache_dir,remote_path=self.remote_location,branch='master')
-        cfg=space.openFieldict('.store.cfg')
+        cfg=space.openFiledict('.store.cfg')
         if not cfg.get('store_keys'):
             cfg.store_keys=['master','empty']
             space.push()

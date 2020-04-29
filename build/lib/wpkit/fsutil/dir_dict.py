@@ -3,6 +3,14 @@ from wpkit.basic import PowerDirPath,standard_path,\
     get_relative_path,DirPath,split_path
 from wpkit.ofile import SimpleListFile,ObjectFile
 
+def is_empty_dir(path):
+    assert os.path.exists(path)
+    if not os.path.isdir(path):
+        return False
+    if len(os.listdir(path)):
+        return False
+    else:
+        return True
 def _copy_dir(src,dst):
     assert os.path.exists(src)
     assert os.path.exists(dst)
@@ -31,6 +39,8 @@ def copy_file(src,dst,overwrite=False):
                 raise FileExistsError('%s is an existed file.'%(dst))
     else:
         parent=os.path.dirname(dst)
+        if parent=='':
+            parent='./'
         assert os.path.exists(parent)
         shutil.copy(src,dst)
 
@@ -50,7 +60,7 @@ def copy_dir(src,dst):
         _copy_dir(src,newdir)
     else:
         parent_dir=os.path.dirname(dst)
-        assert os.path.exists(parent_dir)
+        # assert os.path.exists(parent_dir)
         os.mkdir(dst)
         _copy_dir(src,dst)
 
@@ -60,6 +70,18 @@ def copy_fsitem(src,dst,overwrite=False):
         copy_dir(src,dst)
     else:
         copy_file(src,dst,overwrite=overwrite)
+def remove_fsitem(path):
+    if os.path.isdir(path):
+        return shutil.rmtree(path)
+    else:
+        time=0
+        while True:
+            try:
+                return os.remove(path)
+            except:
+                time+=1
+                if time==3:
+                    raise
 
 class DirDict(object):
     def __init__(self,name=None,realpath=None,*args,**kwargs):
@@ -244,6 +266,18 @@ class FakeOS:
         return os.path.dirname(path)
     def basename(self,path):
         return os.path.basename(path)
+    def iterfiles(self,path='/'):
+        names = self.listdir(path)
+        files=[]
+        for name in names:
+            if self.isfile(name):
+                files.append(name)
+        pathes = [self.path + '/' + name for name in files]
+        return pathes
+    def iterpath(self,path='/'):
+        names=self.listdir(path)
+        pathes=[self.path+'/'+name for name in names]
+        return pathes
     def listdir(self,path='/'):
         path=self._truepath(path)
         return os.listdir(path)

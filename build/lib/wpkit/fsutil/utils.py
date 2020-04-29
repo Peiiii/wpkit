@@ -1,4 +1,28 @@
 import os,shutil,glob
+import inspect
+import time
+def batch_rename_files(src_dir,handler,out_dir=None,glob_str='*',sort_key_func=None):
+    src_dir=os.path.abspath(src_dir)
+    fs=glob.glob(src_dir+'/'+glob_str)
+    if sort_key_func:
+        fs.sort(key=sort_key_func)
+    if not out_dir:
+        out_dir=os.path.dirname(src_dir)+'/'+os.path.basename(src_dir)+'_rename_output'
+        remake(out_dir)
+    args=inspect.getfullargspec(handler)[0]
+    for i,f in enumerate(fs):
+        name=os.path.basename(f)
+        if len(args)==1:
+            name2=handler(name)
+        else:
+            name2=handler(name,i)
+        if name2:
+            f2=out_dir+'/'+name2
+            shutil.copy(f,f2)
+            print(i,f,f2)
+    print('finished.')
+
+
 
 def copy_files_to(files,dst,overwrite=False):
     if not os.path.exists(dst):
@@ -39,8 +63,10 @@ def remove(path,not_exist_ok=True):
             os.remove(path)
     elif not not_exist_ok:
         raise Exception('File or dir %s does not exist'%(path))
-def remake(dir):
-    if os.path.exists(dir):shutil.rmtree(dir)
+def remake(dir,speep_time=0):
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+        time.sleep(speep_time)
     os.makedirs(dir)
 def compare_dirs(src1,src2,dst='./compare_results'):
     files1=glob.glob(src1+'/*.*')

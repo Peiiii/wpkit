@@ -9,16 +9,14 @@ import os
 
 
 class BlogServer(MyBlueprint):
+    add_to_sitemap = True
     def __init__(self,url_prefix='/blogs',default_root_path='data/blogs',data_path="data/blogs",nickname='Blogs', *args,**kwargs):
-        super().__init__(url_prefix=url_prefix,nickname=nickname,*args,**kwargs)
-
         self.data_path=Path(data_path)
         self.db_path=self.data_path/'db'
         self.db=Piu(path=self.db_path)
         default_root_path=os.path.abspath(default_root_path)
         self.db.set('root_path',default_root_path)
-
-        self.add_handlers()
+        super().__init__(url_prefix=url_prefix, nickname=nickname, *args, **kwargs)
     def get_visit_link(self):
         def get_link(path):
             path+='.'
@@ -60,6 +58,7 @@ class BlogServer(MyBlueprint):
         # print("path:",path)
         if path.endswith('.md'):
             tem=self.get_template('view_md.tem',os.path.dirname(path))
+            # print(tem)
             return tem.render(markdown_data=PowerDirPath(path)())
         elif path.endswith('.page'):
             tem=self.get_template(os.path.basename(path),os.path.dirname(path))
@@ -91,8 +90,9 @@ class BlogServer(MyBlueprint):
             tem=self.get_template("index.tem",path)
             return  tem.render(links=items)
         elif "index.md" in names:
-            tem=self.get_template('sys/index.tem',path)
-            return tem.render(body=PowerDirPath(path+'/index.md')())
+            return self.do_view_file(path+'/index.md')
+            # tem=self.get_template('sys/index.tem',path)
+            # return tem.render(body=PowerDirPath(path+'/index.md')())
         return resources.Pages.links.render(links=items)
     def get_template(self,name,dir=None):
         env=get_env(path=dir)

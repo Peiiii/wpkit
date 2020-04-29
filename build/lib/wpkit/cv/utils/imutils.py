@@ -43,3 +43,4 @@ def draw_text(img,text,xy=(0,0),fill='black',font=None):
     draw.text(xy,text=text,fill=fill,font=font)
     return img
 
+

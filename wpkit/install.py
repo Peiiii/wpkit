@@ -3,14 +3,16 @@ dependencies=[
     'flask',
     'Flask-Cors',
     'fire',
-    'dulwich'
+    'dulwich',
+    'wget',
+    'request'
+]
+optional_dependencies=[
+    'gitpython'
 ]
 def install_requirements():
     import os
-    os.system("pip3 install flask")
-    os.system("pip3 install Flask-Cors")
-    os.system("pip3 install fire")
-    os.system("pip3 install gitpython")
-
+    for dep in dependencies:
+        os.system('pip3 install %s'%(dep))
 if __name__ == '__main__':
     install_requirements()

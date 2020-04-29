@@ -120,8 +120,12 @@ class StrictPath:
         prefix='/' if s.startswith('/') or s.startswith("\\") else ''
         def remove_all(lis,item):
             if item in lis:
-                lis.remove(item)
-                return remove_all(lis,item)
+                lis2=lis.copy()
+                for i in lis:
+                    if i==item:
+                        lis2.remove(i)
+                return lis2
+
             else:
                 return lis
         lis=s.split('/')
@@ -149,6 +153,7 @@ def join_path(*args):
 def standard_path(p,check=False):
     assert len(p)
     # if (len(p)<=4 and p[1:]=='://') or (len(p)==3 and p[1:]==':/'):return p[:3]
+    # print(p)
     p=str(StrictPath(p))
     # print(p)
     # if not '/' in p:return p
@@ -244,7 +249,7 @@ class DirPath(str):
             return self.__read__(*args,**kwargs)
         else:
             return self.__write__(s,*args,**kwargs)
-    def info(self,format=False):
+    def info(self,format=False,with_path=False):
         assert self.exists()
         info=FSItemInfo()
         info.atime=self.getatime()
@@ -253,6 +258,8 @@ class DirPath(str):
         info.type=self.type()
         info.name=self.basename()
         info.size=os.path.getsize(self)
+        if with_path:
+            info.path=self.abspath()
         if format:
             info.pretty_format()
         return info
@@ -402,8 +409,10 @@ class PowerDirPath(DirPath):
 class PointDict(dict):
     __no_value__='<__no_value__>'
     def __getattr__(self, key ,default=T.NOT_GIVEN):
-        if key in self.keys():return self[key]
-        elif default!=T.NOT_GIVEN:return default
+        if key in self.keys():
+            return self[key]
+        elif default!=T.NOT_GIVEN:
+            return default
         raise KeyError('No such key named %s'%(key))
     def __setattr__(self, key, value):
         self[key]=value

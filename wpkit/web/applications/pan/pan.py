@@ -10,7 +10,7 @@ import wpkit
 
 
 class BluePan(MyBlueprint):
-
+    add_to_sitemap = True
     def __init__(self, import_name=None, name='pan', datapath='./data/pan', url_prefix='/pan',
                   **kwargs):
         # github_path = "git@github.com:Peiiii/MyCloudSpace.git",

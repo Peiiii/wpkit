@@ -78,9 +78,11 @@ class FileDict(PointDict):
     def __setitem__(self, key, value):
         PointDict.__setitem__(self,key,value)
         self._save()
-    def update(self,**kwargs):
+    def update(self,*args,**kwargs):
         for k,v in kwargs.items():
             self[k]=v
+        for arg in args:
+            self.update(**arg)
     def _save(self):
         json_dump(self,self.geta('path'),indent=4)
 

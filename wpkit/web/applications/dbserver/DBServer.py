@@ -8,11 +8,10 @@ from wpkit.web import utils,resources
 
 class DBServer(MyBlueprint):
     def __init__(self,import_name='__main__',dbpath="./data/db",url_prefix='/db',nickname="DBServer",*args,**kwargs):
+        self.db = BackupDB(path=dbpath)
         super().__init__(import_name=import_name,url_prefix=url_prefix,nickname=nickname,enable_CORS=True,add_to_sitemap=False,*args,**kwargs)
-        self.db=BackupDB(path=dbpath)
-        self.add_handlers()
-        self.add_static(url_prefix='/',static_dir=dbpath)
     def add_handlers(self):
+        self.add_static(url_prefix='/', static_dir=self.db.dbpath)
         @self.route('/cmd',methods=['POST','GET'])
         @parse_json_and_form
         def do_cmd(cmd):

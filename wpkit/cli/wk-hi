@@ -1,0 +1,4 @@
+#!python3 -e
+print('*'*100)
+print('Hello, welcome to use wpkit!'.center(100,'*'))
+print('*'*100)

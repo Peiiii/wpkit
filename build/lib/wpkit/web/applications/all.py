@@ -9,3 +9,4 @@ from .static import BlueStatic
 from .demo import DemoApp
 from .blogserver import BlogServer
 from .osserver import OSServer
+from .webvpn import Webvpn

@@ -2,7 +2,8 @@ from wpkit.web.base import MyBlueprint
 from wpkit.web import utils,resources
 
 class BlueWelcomePage(MyBlueprint):
-    def __init__(self,import_name=None,name='welcome',url_prefix='/sitemap',**kwargs):
+    # add_to_sitemap = True
+    def __init__(self,import_name=None,name='welcome',url_prefix='/welcome',**kwargs):
         super().__init__(name=name,import_name=import_name,url_prefix=url_prefix,add_to_sitemap=False,**kwargs)
         @self.route('/')
         def do_root():

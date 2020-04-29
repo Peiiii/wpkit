@@ -60,10 +60,10 @@ def get_env(path=None):
             ])
         }),
         ChoiceLoader([
-            FileSystemLoader(data_path + '/static'),
-            FileSystemLoader(data_path + '/templates'),
             FileSystemLoader('data/templates'),
             FileSystemLoader('data/user/templates'),
+            FileSystemLoader(data_path + '/static'),
+            FileSystemLoader(data_path + '/templates'),
         ])
     ])
     env = Environment(

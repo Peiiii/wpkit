@@ -56,16 +56,17 @@ class CloudOS(FakeOS):
 
 class OSServer(MyBlueprint):
     def __init__(self,url_prefix='/os',default_root_path='./',*args,**kwargs):
-        super().__init__(url_prefix=url_prefix,add_to_sitemap=False,*args,**kwargs)
+
         self.root_path=default_root_path
         self.os=CloudOS(self.root_path)
         self.root_path=self.os.path
-        self.add_handlers()
         self.debug=True
+        super().__init__(url_prefix=url_prefix, add_to_sitemap=False, *args, **kwargs)
     def add_handlers(self):
         self.add_static('/files',self.root_path)
         @self.route('/')
         def do_root():
+
             return Pages.base.render()
         @self.os.add_cmd
         def getpage(path):

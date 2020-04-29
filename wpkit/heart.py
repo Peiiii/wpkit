@@ -730,4 +730,5 @@ def peppa():
     t.circle(70, 30)
 
 if __name__ == '__main__':
-    rose1()
+    import fire
+    fire.Fire()

@@ -1,5 +1,9 @@
-from wpkit.gitspace import GitSpace,open_default,Store,default_remote_location,GitRepo,clone,Repo,is_git_dir,FakeOS
-from wpkit.fsutil import Folder,copy_file,copy_dir,copy_fsitem
+'''
+Deprecated.
+'''
+
+from .gitspace import GitSpace,open_default,default_remote_location,GitRepo,is_git_dir,FakeOS
+from wpkit.fsutil import Folder,copy_file,copy_dir,copy_fsitem,remove_fsitem,is_empty_dir
 from wpkit.piu import FileDict
 from wpkit.basic import T,TMetaClass,CONST_TYPE
 import os,shutil,glob
@@ -10,7 +14,64 @@ class CONST(metaclass=TMetaClass):
     master=_T()
     empty=_T()
 
+
+class Store:
+    def __init__(self,path='.store.main',remote_location=None,cache_dir='.store.cache'):
+        remote_location=remote_location or default_remote_location
+        self.path=path
+        self.cache_dir=cache_dir
+        self.remote_location=remote_location
+        self.folder=StoreFolder.openStorefolder(self.path,remote_location=self.remote_location,remote_branch='empty')
+    def sync_keys(self):
+        self.folder._pull_remote_branch_list(remote_location=self.remote_location,hard=True)
+        return self.keys()
+    def keys(self):
+        return self.folder._read_remote_branch_list()
+    def is_legal_key(self,key):
+        legal_chars=StoreItem.legal_path_chars+['/']
+        if StoreItem.delimiter in key:
+            return False
+        for ch in key:
+            if not ch in legal_chars:
+                return False
+        return True
+    def key_to_branch(self,key):
+        assert self.is_legal_key(key)
+        remote_branch = key.replace('/', StoreItem.delimiter)
+        return remote_branch
+    def get(self,key,path=None,overwrite=False):
+        path=path or './'
+        if os.path.exists(path):
+            if os.path.isfile(path):
+                if overwrite:
+                    remove_fsitem(path)
+                else:
+                    raise FileExistsError('File %s already exists.'%(path))
+            if os.path.isdir(path):
+                tp=path+'/'+os.path.basename(key)
+                if os.path.exists(tp):
+                    if (os.path.isdir(tp) and not is_empty_dir(tp)) or os.path.isfile(tp):
+                        if overwrite:
+                            remove_fsitem(tp)
+                        else:
+                            raise FileExistsError('File %s already exists.' % (tp))
+        remote_branch=self.key_to_branch(key)
+        # print(remote_branch,self.keys())
+        assert remote_branch in self.keys()
+        StoreItem.export(path,remote_location=self.remote_location,remote_branch=remote_branch)
+        return True
+    def set(self,key,path,recursive=False):
+        remote_branch=self.key_to_branch(key)
+        if not recursive:
+            StoreItem.uploadStoreitem(path,remote_location=self.remote_location,remote_branch=remote_branch,cache_dir=self.cache_dir)
+        else:
+            StoreItem.uploadStoreitemRecursive(path,remote_location=self.remote_location,remote_branch=remote_branch,cache_dir=self.cache_dir)
+
+
 class StoreItem(Folder):
+    delimiter='.-.'
+    special_branches = ['master', 'empty', 'remote_branch_list']
+    legal_path_chars = [str(i) for i in range(10)]+[chr(i) for i in range(65, 91)]+[chr(i) for i in range(97, 123)]+list('._-')
     def status(self,repo=None):
         repo=repo or self.repo
         from wpkit.basic import PointDict
@@ -36,10 +97,10 @@ class StoreItem(Folder):
         self.path=path
         self.remote_location=remote_location or default_remote_location
         self.remote_branch=remote_branch
-        self.data_list=['.git','.type.store'] # clean except
-        self.info_list=['.git','.type.store','.more.store']  # copy except
+        self.data_list=['.git','.type.store','.name.store'] # clean except
+        self.info_list=['.git','.type.store','.more.store','.name.store']  # copy except
         self.typefile=self.openFiledict('.type.store')
-        self.special_branches=['master','empty','remote_branch_list']
+
         self.init_branches()
     def _pull_remote_branch_list(self,repo=None,remote_location=None,remote_branch='remote_branch_list',hard=False):
         repo=repo or self.repo
@@ -51,13 +112,16 @@ class StoreItem(Folder):
         if hard:
             pull=True
         if pull:
-            br = repo.active_branch()
-            repo.checkout_branch('remote_branch_list')
-            repo.clean()
-            repo.add_all()
-            repo.commit()
-            repo.pull(remote_location, branch=remote_branch)
-            repo.checkout_branch(br)
+            try:
+                br = repo.active_branch()
+                repo.checkout_branch('remote_branch_list')
+                repo.clean()
+                repo.add_all()
+                repo.commit()
+                repo.pull(remote_location, branch=remote_branch)
+                repo.checkout_branch(br)
+            except:
+                print("Can't pull remote_branch_list, maybe because local branch is already updated.")
 
     def init_branches(self,repo=None):
         '''
@@ -94,15 +158,15 @@ class StoreItem(Folder):
     def _add_to_remote_branch_list(self,branch):
         repo=self.repo
         br=repo.active_branch()
-        self._pull_remote_branch_list()
+        self._pull_remote_branch_list(hard=True)
         repo.checkout_branch(CONST.remote_branch_list)
         # repo.pull(self.remote_location,CONST.remote_branch_list)
         lf=self.openSimplelistfile(CONST.remote_branch_list)
         li=lf.read()
-        print("original:",li)
+        # print("original:",li)
         li.append(branch)
         li=list(set(li))
-        print("now:",li)
+        # print("now:",li)
         lf.write(li)
         repo.add_all()
         repo.commit()
@@ -201,12 +265,12 @@ class StoreItem(Folder):
                 copy_fsitem(p, path)
             more = obj.morefile.copy()
             # obj.rmself()
-            for name, br in more.items():
+            for nm, br in more.items():
                 br_cache_dir=cache_dir+'/'+br
-                cls.export(path, remote_location=remote_location, remote_branch=br, name=name, cache_dir=br_cache_dir,overwrite=overwrite)
+                cls.export(path, remote_location=remote_location, remote_branch=br, name=nm, cache_dir=br_cache_dir,overwrite=overwrite)
         this_dir=cache_dir+'/.this'
         obj=StoreItem.pull(remote_location=remote_location,remote_branch=remote_branch,path=this_dir)
-        name = name or remote_branch
+        name = name or remote_branch.split(cls.delimiter)[-1]
         if isinstance(obj,StoreFolder):
             if not os.path.exists(path):
                 os.makedirs(path)
@@ -235,7 +299,100 @@ class StoreItem(Folder):
                     copy_fsitem(p, path)
             # obj.rmself()
         # shutil.rmtree(cache_dir)
+    @classmethod
+    def uploadStoreitem(cls,path, remote_location, remote_branch, cache_dir):
+        assert os.path.exists(path)
+        if os.path.isdir(path):
+            tmp = StoreFolder(cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+        else:
+            tmp = StoreFile(cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+        tmp.clean()
+        if os.path.isfile(path):
+            tmp.eat(path)
+        else:
+            for p in os.listdir(path):
+                p = path + '/' + p
+                tmp.eat(p)
+        tmp.upload(remote_location=remote_location, remote_branch=remote_branch)
+    @staticmethod
+    def is_legal_path_to_upload(path):
+        path=os.path.basename(path)
+        legal_path_chars=StoreItem.legal_path_chars
+        # print(legal_path_chars)
+        if StoreItem.delimiter in path:
+            import logging
+            logging.warning('Illegal path "%s"!' % (path))
+            return False
+        for ch in path:
+            if ch not in legal_path_chars:
+                import logging
+                logging.warning('Illegal path "%s"!'%(path))
+                return False
+        return True
 
+    @classmethod
+    def uploadStoreitemRecursive(cls,path, remote_location=None, remote_branch=None,
+                                 cache_dir='.store.upload.cache',depth=-1,check_path=True):
+        # todo: check branch name
+        # assert remote_branch not in cls.special_branches
+        assert depth>=0 or depth==-1
+        assert os.path.exists(path)
+        if check_path:
+            assert cls.is_legal_path_to_upload(path)
+        remote_location=remote_location or default_remote_location
+        assert remote_branch
+        if os.path.exists(cache_dir):
+            shutil.rmtree(cache_dir)
+        target_dir=cache_dir+'/target'
+        store_dir=cache_dir+'/stores'
+        os.makedirs(target_dir)
+        copy_fsitem(path,target_dir)
+        path=target_dir+'/'+os.path.basename(path)
+        return cls._uploadStoreitemRecursive(path, remote_location, remote_branch, cache_dir=store_dir,depth=depth,check_path=check_path)
+    @classmethod
+    def _uploadStoreitemRecursive(cls,path, remote_location, remote_branch, cache_dir,depth=0,check_path=True):
+        assert os.path.exists(path)
+        if check_path:
+            assert cls.is_legal_path_to_upload(path)
+        if os.path.exists(cache_dir):
+            shutil.rmtree(cache_dir)
+        os.makedirs(cache_dir)
+        print('path:',path)
+        if depth==0:
+            if os.path.isdir(path):
+
+                tmp = StoreFolder(cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+                tmp.clean()
+                for p in os.listdir(path):
+                    p = path + '/' + p
+                    tmp.eat(p)
+            else:
+                tmp = StoreFile(cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+                tmp.clean()
+                tmp.eat(path)
+        else:
+            import uuid
+            if os.path.isdir(path):
+                self_cache_dir = cache_dir+'/self-cache-' + uuid.uuid4().hex
+                more={}
+                for name in os.listdir(path):
+                    p=path+"/"+name
+                    if check_path:
+                        assert cls.is_legal_path_to_upload(p)
+                    item_cache_dir=cache_dir+'/item-cache-'+name
+                    os.mkdir(item_cache_dir)
+                    item_branch=remote_branch+cls.delimiter+name
+                    cls._uploadStoreitemRecursive(path=p,remote_location=remote_location,remote_branch=item_branch,cache_dir=item_cache_dir,depth=depth-1)
+                    more[name]=item_branch
+                os.mkdir(self_cache_dir)
+                tmp = StoreFolder(self_cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+                tmp.morefile.update(more)
+            else:
+                tmp = StoreFile(cache_dir, remote_location=remote_location, remote_branch=remote_branch)
+                tmp.clean()
+                tmp.eat(path)
+        tmp.upload(remote_location=remote_location, remote_branch=remote_branch)
+        remove_fsitem(path)
 
     def clean(self):
         names=self.listdir()
@@ -251,7 +408,7 @@ class StoreFolder(StoreItem):
         self.set_type(T.FOLDER)
     def addmore(self,name,branch):
         self.morefile[name]=branch
-    def eatStore(self,path,name=None,remote_location=None,remote_branch=None,upload=True,overwrite=False,cache_dir='.tmp'):
+    def eatStore(self,path,name=None,remote_location=None,remote_branch=None,upload=True,overwrite=False,cache_dir='.tmp',in_depth=0):
         if os.path.exists(cache_dir):
             shutil.rmtree(cache_dir)
         os.makedirs(cache_dir)
@@ -262,30 +419,15 @@ class StoreFolder(StoreItem):
         assert remote_location
         if not remote_branch:
             assert self.remote_branch
-            remote_branch=self.remote_branch+'-'+name
+            remote_branch=self.remote_branch+self.delimiter+name
         if upload:
-            uploadStoreitem(path,remote_location=remote_location,remote_branch=remote_branch,cache_dir=cache_dir)
+            StoreItem.uploadStoreitem(path,remote_location=remote_location,remote_branch=remote_branch,cache_dir=cache_dir)
         self.morefile[name]=remote_branch
 
 class StoreFile(StoreItem):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.set_type(T.FILE)
-def uploadStoreitem(path,remote_location, remote_branch,cache_dir):
-    assert os.path.exists(path)
-    if os.path.isdir(path):
-        tmp = StoreFolder(cache_dir,remote_location=remote_location,remote_branch=remote_branch)
-    else:
-        tmp =StoreFile(cache_dir,remote_location=remote_location,remote_branch=remote_branch)
-    tmp.clean()
-    if os.path.isfile(path):
-        tmp.eat(path)
-    else:
-        for p in os.listdir(path):
-            p=path+'/'+p
-            tmp.eat(p)
-    tmp.upload(remote_location=remote_location, remote_branch=remote_branch)
-    # tmp.rmself()
 
 
 
