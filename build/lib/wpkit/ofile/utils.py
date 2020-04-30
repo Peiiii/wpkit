@@ -95,7 +95,7 @@ def load_list_from_string(text='',template=[list,'\n']):
 
 def load_list_from_string_v2(text='',template=[list,'\n']):
     '''
-    # [list,'\n',[dict,' ',[list,' ',[list,',']]]]
+    # [list,'\n',[dict,' ',':',[list,' ',[list,',']]]]
     '''
     if not template:
         return text
@@ -114,7 +114,7 @@ def load_list_from_string_v2(text='',template=[list,'\n']):
             items=text.split(splitchar)
             if next_template:
                 for i,item in enumerate(items):
-                    items[i]=load_list_from_string(item,next_template)
+                    items[i]=load_list_from_string_v2(item,next_template)
             items=cls(items)
             return items
         elif cls in [dict]:
@@ -128,7 +128,7 @@ def load_list_from_string_v2(text='',template=[list,'\n']):
             for item in items:
                 k,v =item.split(kv_split,maxsplit=1)
                 if next_template:
-                    v = load_list_from_string(v, next_template)
+                    v = load_list_from_string_v2(v, next_template)
                 dic[k]=v
             return dic
 

@@ -1,6 +1,16 @@
 import os,shutil,glob
 import inspect
 import time
+
+def merge_dirs(src_dirs,dst_dir):
+    if  os.path.exists(dst_dir):
+        shutil.rmtree(dst_dir)
+        a=0
+    os.makedirs(dst_dir)
+    for dir in src_dirs:
+        fs=glob.glob(dir+'/*')
+        copy_files_to(fs,dst_dir)
+
 def batch_rename_files(src_dir,handler,out_dir=None,glob_str='*',sort_key_func=None):
     src_dir=os.path.abspath(src_dir)
     fs=glob.glob(src_dir+'/'+glob_str)

@@ -95,7 +95,7 @@ def load_list_from_string(text='',template=[list,'\n']):
 
 def load_list_from_string_v2(text='',template=[list,'\n']):
     '''
-    # [list,'\n',[dict,' ',[list,' ',[list,',']]]]
+    # [list,'\n',[dict,' ',':',[list,' ',[list,',']]]]
     '''
     if not template:
         return text
